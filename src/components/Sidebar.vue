@@ -27,6 +27,12 @@
               優惠券列表
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin/orderlist">
+              <i class="far fa-list-alt"></i>
+              訂單列表
+            </router-link>
+          </li>
         </ul>
         <h6
           class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
@@ -42,10 +48,10 @@
               <i class="fas fa-shopping-cart"></i>
               模擬訂單
             </router-link>
-            <!-- <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              模擬訂單
-            </a>-->
+            <a class="nav-link" href="/#/home/homeTest">
+              <i class="fas fa-igloo"></i>
+              測試版首頁
+            </a>
           </li>
         </ul>
       </div>

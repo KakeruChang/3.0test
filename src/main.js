@@ -4,6 +4,7 @@ import VueAxios from 'vue-axios';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import 'bootstrap';
+import 'jquery';
 import VeeValidate from 'vee-validate';
 import zhTWValidate from 'vee-validate/dist/locale/zh_TW';
 
@@ -38,12 +39,13 @@ new Vue({
 
 router.beforeEach((to, from, next) => {
   // to and from are both route objects. must call `next`.
+  console.log('(router)to:', to);
   if (to.meta.requiresAuth) {
+    console.log('(router)to.meta.requiresAuth:', to.meta.requiresAuth);
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
     // this.$http.post(api).then(response => { 須在vue元件中才能用this.$http
-    // console.log('需要驗證', to);
     axios.post(api).then((response) => {
-      // console.log(response);
+      console.log('(router)response:', response);
       if (response.data.success === true) {
         next();
       } else {

@@ -115,6 +115,7 @@
           <input
             type="email"
             class="form-control"
+            :class="{'is-invalid':errors.has('email')}"
             name="email"
             id="useremail"
             v-validate="'required|email'"
@@ -144,11 +145,15 @@
           <label for="usertel">收件人電話</label>
           <input
             type="tel"
+            name="tel"
             class="form-control"
+            :class="{'is-invalid':errors.has('tel')}"
             id="usertel"
             v-model="form.user.tel"
+            v-validate="'required'"
             placeholder="請輸入電話"
           >
+          <span class="text-danger" v-if="errors.has('tel')">電話必須輸入</span>
         </div>
 
         <div class="form-group">
@@ -157,11 +162,28 @@
             type="address"
             class="form-control"
             name="address"
+            :class="{'is-invalid':errors.has('address')}"
             id="useraddress"
             v-model="form.user.address"
+            v-validate="'required'"
             placeholder="請輸入地址"
           >
-          <span class="text-danger">地址欄位不得留空</span>
+          <span class="text-danger" v-if="errors.has('address')">地址欄位不得留空</span>
+        </div>
+
+        <div class="form-group">
+          <label for="userpayment_method">付款方式</label>
+          <input
+            type="address"
+            class="form-control"
+            name="payment_method"
+            :class="{'is-invalid':errors.has('payment_method')}"
+            id="userpayment_method"
+            v-model="form.user.payment_method"
+            v-validate="'required'"
+            placeholder="請輸入付款方式"
+          >
+          <span class="text-danger" v-if="errors.has('payment_method')">付款方式不得留空</span>
         </div>
 
         <div class="form-group">
@@ -245,6 +267,7 @@ export default {
           email: '',
           tel: '',
           address: '',
+          payment_method: ''
         },
         message: '',
       },
@@ -256,7 +279,7 @@ export default {
   methods: {
     getProducts(page = 1) {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/products?page=${page}`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
       // const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products`;
       vm.isLoading = true;
       this.$http.get(url).then(response => {
@@ -268,7 +291,7 @@ export default {
     },
     gettheProduct(id) {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${id}`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
       vm.status.loadingItem = id;
       this.$http.get(url).then(response => {
         vm.product = response.data.product;
@@ -280,7 +303,7 @@ export default {
     },
     addtoCart(id, qty = 1) {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       vm.status.loadingItem = id;
       const cart = {
         product_id: id,
@@ -295,7 +318,7 @@ export default {
     },
     getCart() {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       vm.isLoading = true;
       this.$http.get(url).then(response => {
         console.log(response.data);
@@ -306,7 +329,7 @@ export default {
     },
     removeCartItem(id) {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       vm.isLoading = true;
       this.$http.delete(url).then(response => {
         console.log(response.data);
@@ -316,7 +339,7 @@ export default {
     },
     addCouponCode() {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       const coupon = {
         code: vm.coupon_code
       }
@@ -329,7 +352,7 @@ export default {
     },
     createOrder() {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/order`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       const order = vm.form;
       vm.isLoading = true;
       this.$validator.validate().then((result) => {

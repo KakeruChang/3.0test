@@ -8,6 +8,9 @@ import Products from './views/Products.vue';
 import Coupons from './views/Coupons.vue';
 import CustomerOrder from './views/CustomerOrders.vue';
 import CustomerCheckout from './views/CustomerCheckout.vue';
+import OrderList from './views/OrderList.vue';
+import Home from './components/Home/Home.vue';
+import HomeTest from './views/HomeTest.vue';
 
 Vue.use(Router);
 
@@ -55,6 +58,19 @@ export default new Router({
       ],
     },
     {
+      path: '/admin',
+      name: 'DashboardtoOrderList',
+      component: Dashboard,
+      children: [
+        {
+          path: 'orderlist',
+          name: 'OrderList',
+          component: OrderList,
+          meta: { requiresAuth: true },
+        },
+      ],
+    },
+    {
       path: '/',
       name: 'DashboardforCustomer',
       component: Dashboard,
@@ -68,6 +84,18 @@ export default new Router({
           path: 'customer_checkout/:orderId',
           name: 'CustomerCheckout',
           component: CustomerCheckout,
+        },
+      ],
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home,
+      children: [
+        {
+          path: 'homeTest',
+          name: 'HomeTest',
+          component: HomeTest,
         },
       ],
     },
