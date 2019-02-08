@@ -10,7 +10,8 @@ import CustomerOrder from './views/CustomerOrders.vue';
 import CustomerCheckout from './views/CustomerCheckout.vue';
 import OrderList from './views/OrderList.vue';
 import Home from './components/Home/Home.vue';
-import HomeTest from './views/HomeTest.vue';
+import HomeTest from './views/front/HomeTest.vue';
+import FrontProducts from './views/front/FrontProducts.vue';
 
 Vue.use(Router);
 
@@ -96,6 +97,11 @@ export default new Router({
           path: 'homeTest',
           name: 'HomeTest',
           component: HomeTest,
+        },
+        {
+          path: 'frontProducts',
+          name: 'FrontProducts',
+          component: FrontProducts,
         },
       ],
     },

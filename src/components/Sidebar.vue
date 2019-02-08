@@ -48,7 +48,7 @@
               <i class="fas fa-shopping-cart"></i>
               模擬訂單
             </router-link>
-            <a class="nav-link" href="/#/home/homeTest">
+            <a class="nav-link" href="/#/home/frontProducts">
               <i class="fas fa-igloo"></i>
               測試版首頁
             </a>
