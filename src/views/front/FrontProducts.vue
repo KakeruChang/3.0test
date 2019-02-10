@@ -17,7 +17,7 @@
             role="tab"
             aria-controls="v-pills-home"
             aria-selected="true"
-            @click="productFilter=''"
+            @click.prevent="productFilter='';getProducts();"
           >全部</a>
           <a
             class="nav-link"
@@ -27,7 +27,7 @@
             role="tab"
             aria-controls="v-pills-profile"
             aria-selected="false"
-            @click="productFilter='キャラ'"
+            @click.prevent="productFilter='キャラ';getProducts();"
           >角色</a>
           <a
             class="nav-link"
@@ -37,7 +37,7 @@
             role="tab"
             aria-controls="v-pills-messages"
             aria-selected="false"
-            @click="productFilter='召喚石'"
+            @click="productFilter='召喚石';getProducts();"
           >召喚石</a>
           <a
             class="nav-link"
@@ -47,7 +47,7 @@
             role="tab"
             aria-controls="v-pills-settings"
             aria-selected="false"
-            @click="productFilter='武器'"
+            @click="productFilter='武器';getProducts();"
           >武器</a>
         </div>
       </div>
@@ -64,7 +64,7 @@
             >
           </div>
         </div>
-        <div class="col-md-4 mb-4" v-for="item in filterProducts" :key="item.id">
+        <div class="col-md-4 mb-4" v-for="item in productsRevealed" :key="item.id">
           <div class="card border-0 shadow-sm">
             <div
               style="height: 150px; background-size: cover; background-position: center"
@@ -106,7 +106,7 @@
     </div>
     <Pagination :page-data="pagination" @pagemove="getProducts"></Pagination>
     <!--訂單-->
-    <div class="row justify-content-center" v-if="carts.total!==0">
+    <!-- <div class="row justify-content-center" v-if="carts.total!==0">
       <div class="col-md-8">
         <table class="table my-5">
           <thead>
@@ -169,7 +169,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
     <!--  -->
     <!-- <div class="my-5 row justify-content-center">
       <form class="col-md-6" @submit.prevent="createOrder">
@@ -318,7 +318,9 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      products: [],
+      productsAll: [],
+      productsFilted: [],
+      productsRevealed: [],
       product: {}, // 存放modal資料
       isLoading: false, // true時啟動loading效果
       status: {
@@ -330,12 +332,18 @@ export default {
           email: '',
           tel: '',
           address: '',
-          payment_method: ''
+          payment_method: '',
         },
         message: '',
       },
       carts: [],
-      pagination: {},
+      pagination: {
+        current_page: 0,
+        has_pre: '',
+        has_next: '',
+        total_pages: 0
+      },
+      paginationV1: {},
       coupon_code: '',
       productFilter: '',
       searchFilter: '',
@@ -344,15 +352,58 @@ export default {
   methods: {
     getProducts(page = 1) {
       const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
+      const numofPerpage = 6;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
       // const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products`;
+      const urlAll = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       vm.isLoading = true;
-      this.$http.get(url).then(response => {
-        console.log(response.data);
+      this.$http.get(urlAll).then(response => {
         vm.isLoading = false;
-        vm.products = response.data.products;
-        vm.pagination = response.data.pagination;
-      })
+        vm.productsAll = response.data.products;
+        console.log('vm.productsFilted_before:', vm.productsFilted, vm.productsFilted.length);
+        //以filter過濾資料
+        vm.productsFilted = vm.productsAll.slice().filter(function (item) {
+          if (vm.productFilter === '' && vm.searchFilter === '') {
+            return true;
+          } else if (vm.productFilter === '' && vm.searchFilter !== ''
+            && (item.title.match(vm.searchFilter)
+              || item.content.match(vm.searchFilter)
+              || item.description.match(vm.searchFilter))) {
+            return true;
+          } else if (vm.productFilter !== '' && vm.searchFilter === '' && item.category.match(vm.productFilter)) {
+            return true;
+          } else if (item.category.match(vm.productFilter)
+            && (item.title.match(vm.searchFilter)
+              || item.content.match(vm.searchFilter)
+              || item.description.match(vm.searchFilter))) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        //以filter過濾資料
+        console.log('vm.productsFilted_after:', vm.productsFilted, vm.productsFilted.length);
+        //計算pagination資料
+        vm.pagination.total_pages = Math.ceil(vm.productsFilted.length / numofPerpage);
+        console.log('numofPerpage:', numofPerpage);
+        console.log('vm.productsFilted.length:', vm.productsFilted.length);
+        console.log('vm.pagination.total_pages', vm.pagination.total_pages);
+        vm.pagination.current_page = page;
+        if (vm.pagination.current_page > 1) {
+          vm.pagination.has_pre = true;
+        } else {
+          vm.pagination.has_pre = false;
+        }
+        if (vm.pagination.current_page < vm.pagination.total_pages) {
+          vm.pagination.has_next = true;
+        } else {
+          vm.pagination.has_next = false;
+        }
+        console.log('pagination:', vm.pagination);
+        //計算pagination資料
+        vm.productsRevealed = vm.productsFilted.slice(numofPerpage * (vm.pagination.current_page - 1), numofPerpage * vm.pagination.current_page);
+        console.log('vm.productsRevealed:', vm.productsRevealed);
+      });
     },
     gettheProduct(id) {
       const vm = this;
@@ -364,7 +415,7 @@ export default {
         vm.product.num = 1;
         console.log(response.data);
         vm.status.loadingItem = '';
-      })
+      });
     },
     addtoCart(id, qty = 1) {
       const vm = this;
@@ -372,14 +423,14 @@ export default {
       vm.status.loadingItem = id;
       const cart = {
         product_id: id,
-        qty
+        qty,
       };
       this.$http.post(url, { data: cart }).then(response => {
         console.log(response.data);
         vm.status.loadingItem = '';
         vm.getCart();
         $('#productModal').modal('hide');
-      })
+      });
     },
     getCart() {
       const vm = this;
@@ -390,7 +441,7 @@ export default {
         vm.isLoading = false;
         vm.carts = response.data.data;
         console.log(vm.carts);
-      })
+      });
     },
     removeCartItem(id) {
       const vm = this;
@@ -400,20 +451,20 @@ export default {
         console.log(response.data);
         vm.getCart();
         vm.isLoading = false;
-      })
+      });
     },
     addCouponCode() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       const coupon = {
-        code: vm.coupon_code
-      }
+        code: vm.coupon_code,
+      };
       vm.isLoading = true;
       this.$http.post(url, { data: coupon }).then(response => {
         console.log(response.data);
         vm.getCart();
         vm.isLoading = false;
-      })
+      });
     },
     createOrder() {
       const vm = this;
@@ -429,35 +480,17 @@ export default {
             }
             // vm.getCart();
             vm.isLoading = false;
-          })
+          });
         } else {
           console.log('欄位不完整');
         }
       });
-    }
-  },
-  computed: {
-    filterProducts() {
-      let vm = this;
-      return vm.products.slice().filter(function (item, i) {
-        if (vm.productFilter === '' && vm.searchFilter === '') {
-          return true;
-        } else if (vm.productFilter === '' && vm.searchFilter !== '' && item.title.match(vm.searchFilter) !== null) {
-          return true;
-        } else if (vm.productFilter !== '' && vm.searchFilter === '' && item.category.match(vm.productFilter) !== null) {
-          return true;
-        } else if (item.title.match(vm.searchFilter) !== null && item.category.match(vm.productFilter) !== null) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-    }
+    },
   },
   created() {
     this.getProducts();
     this.getCart();
-  }
+  },
 };
 </script>
 <style scoped>

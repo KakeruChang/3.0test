@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import HomeNavbar from './HomeNavbar'
+import HomeNavbar from './HomeNavbar';
 
 export default {
   components: {
     HomeNavbar,
   },
-}
+};
 </script>
 <style scoped>
 .container-fluid {
@@ -27,6 +27,6 @@ export default {
   /* background-repeat: no-repeat; */
   background-position: center;
   background-size: cover;
-  height: 1000px;
+  height: 2000px;
 }
 </style>
