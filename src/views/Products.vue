@@ -340,16 +340,16 @@ export default {
       const vm = this;
       const formData = new FormData();
       formData.append('file-to-upload', uploadedFile);// 新增欄位
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/upload`;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/upload`;
       vm.status.fileUploading = true;
       vm.$http.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }).then((response) => {
-        console.log(response.data);
         vm.status.fileUploading = false;
         if (response.data.success) {
+          console.log('success');
           // vm.tempProduct.imageUrl = response.data.imageUrl; 僅寫入
           vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);// 寫入並綁定
         } else {

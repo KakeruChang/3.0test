@@ -2,24 +2,13 @@ import Vue from 'vue';
 import Router from 'vue-router';
 // import Home from './views/Home.vue';
 
-import Dashboard from './components/Dashboard.vue';
-import Login from './views/Login.vue';
-import Products from './views/Products.vue';
-import Coupons from './views/Coupons.vue';
-import CustomerOrder from './views/CustomerOrders.vue';
-import CustomerCheckout from './views/CustomerCheckout.vue';
-import OrderList from './views/OrderList.vue';
-import Home from './components/Home/Home.vue';
-import HomeTest from './views/front/HomeTest.vue';
-import FrontProducts from './views/front/FrontProducts.vue';
-
 Vue.use(Router);
 
 export default new Router({
   routes: [
     {
       path: '*',
-      redirect: 'login',
+      redirect: '/HomePage',
     },
     // {
     //   path: '/',
@@ -27,81 +16,78 @@ export default new Router({
     //   component: HelloWorld,
     //   meta: { requiresAuth: true },
     // },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login,
-    },
-    {
-      path: '/admin',
-      name: 'Dashboard',
-      component: Dashboard,
-      children: [
-        {
-          path: 'products',
-          name: 'Products',
-          component: Products,
-          meta: { requiresAuth: true },
-        },
-      ],
-    },
-    {
-      path: '/admin',
-      name: 'DashboardtoCoupons',
-      component: Dashboard,
-      children: [
-        {
-          path: 'coupons',
-          name: 'Coupons',
-          component: Coupons,
-          meta: { requiresAuth: true },
-        },
-      ],
-    },
-    {
-      path: '/admin',
-      name: 'DashboardtoOrderList',
-      component: Dashboard,
-      children: [
-        {
-          path: 'orderlist',
-          name: 'OrderList',
-          component: OrderList,
-          meta: { requiresAuth: true },
-        },
-      ],
-    },
+    // {
+    //   path: '/',
+    //   name: 'DashboardforCustomer',
+    //   component: Dashboard,
+    //   children: [
+    //   ],
+    // },
     {
       path: '/',
-      name: 'DashboardforCustomer',
-      component: Dashboard,
-      children: [
-        {
-          path: 'customer_order',
-          name: 'CustomerOrder',
-          component: CustomerOrder,
-        },
-        {
-          path: 'customer_checkout/:orderId',
-          name: 'CustomerCheckout',
-          component: CustomerCheckout,
-        },
-      ],
-    },
-    {
-      path: '/home',
       name: 'Home',
-      component: Home,
+      component: () => import('./components/Home/Home.vue'),
+      redirect: '/HomePage',
       children: [
         {
-          path: 'homeTest',
-          name: 'HomeTest',
-          component: HomeTest,
+          path: '/HomePage',
+          name: 'HomePage',
+          component: () => import('./views/front/HomePage.vue'),
         },
         {
           path: 'frontProducts',
           name: 'FrontProducts',
-          component: FrontProducts,
+          component: () => import('./views/front/FrontProducts.vue'),
+        },
+      ],
+    },
+    {
+      path: '/orders',
+      name: 'Orders',
+      component: () => import('./views/front/Orders.vue'),
+    },
+    {
+      path: '/checkout/:orderId',
+      name: 'Checkout',
+      component: () => import('./views/front/Checkout.vue'),
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('./views/Login.vue'),
+    },
+    {
+      path: '/admin',
+      name: 'Dashboard',
+      component: () => import('./components/Dashboard.vue'),
+      children: [
+        {
+          path: 'products',
+          name: 'Products',
+          component: () => import('./views/Products.vue'),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'coupons',
+          name: 'Coupons',
+          component: () => import('./views/Coupons.vue'),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'orderlist',
+          name: 'OrderList',
+          component: () => import('./views/OrderList.vue'),
+          meta: { requiresAuth: true },
+        },
+        {
+          path: 'customer_order',
+          name: 'CustomerOrder',
+          component: () => import('./views/CustomerOrders.vue'),
+        },
+        {
+          path: 'customer_checkout/:orderId',
+          name: 'CustomerCheckout',
+          component: () => import('./views/CustomerCheckout.vue'),
         },
       ],
     },

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrap">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item" :class="{'disabled':!pageData.has_pre}">
@@ -53,3 +53,4 @@ export default {
   }
 }
 </script>
+

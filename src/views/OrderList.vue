@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr v-for="item in orderList" :key="item.id">
-          <td>{{item.paid_date}}</td>
+          <td>{{item.create_at}}</td>
           <td>
             <p>姓名:{{item.user.name}}</p>
             <p>地址:{{item.user.address}}</p>
@@ -37,7 +37,7 @@
         </tr>
       </tbody>
     </table>
-    <Pagination v-if="pagination.total_pages>1" :page-data="pagination" @pagemove="getCoupons"></Pagination>
+    <Pagination v-if="pagination.total_pages>1" :page-data="pagination" @pagemove="getOrderList"></Pagination>
     <!-- add&edit Modal -->
     <div
       class="modal fade"
