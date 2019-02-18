@@ -236,6 +236,9 @@ import $ from 'jquery';
 export default {
   data() {
     return {
+      // productsAll: [],
+      productsFilted: [],
+      productsRevealed: [],
       product: {}, // 存放modal資料
       // isLoading: false, // true時啟動loading效果
       status: {
@@ -252,6 +255,12 @@ export default {
         message: '',
       },
       carts: [],
+      pagination: {
+        current_page: 0,
+        has_pre: '',
+        has_next: '',
+        total_pages: 0,
+      },
       coupon_code: '',
       productFilter: '',
       searchFilter: '',
@@ -259,11 +268,62 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      this.$store.dispatch('updatePage', page);
-      this.$store.dispatch('updateProductFilter', this.productFilter);
-      this.$store.dispatch('updateSearchFilter', this.searchFilter);
-      this.$store.dispatch('getProducts');
+      const vm = this;
+      const numofPerpage = 9;
+      console.log('3');
+      this.$store.dispatch('getProducts').then(() => {
+        // 以filter過濾資料
+        vm.productsFilted = vm.productsAll.slice().filter((item) => {
+          if (vm.productFilter === '' && vm.searchFilter === '') {
+            return true;
+          }
+          if (vm.productFilter === '' && vm.searchFilter !== ''
+            && (item.title.match(vm.searchFilter)
+              || item.content.match(vm.searchFilter)
+              || item.description.match(vm.searchFilter))) {
+            return true;
+          }
+          if (vm.productFilter !== '' && vm.searchFilter === '' && item.category.match(vm.productFilter)) {
+            return true;
+          }
+          if (item.category.match(vm.productFilter)
+            && (item.title.match(vm.searchFilter)
+              || item.content.match(vm.searchFilter)
+              || item.description.match(vm.searchFilter))) {
+            return true;
+          }
+          return false;
+        });
+        // 以filter過濾資料
+        console.log('vm.productsFilted_after:', vm.productsFilted, vm.productsFilted.length);
+        // 計算pagination資料
+        vm.pagination.total_pages = Math.ceil(vm.productsFilted.length / numofPerpage);
+        console.log('numofPerpage:', numofPerpage);
+        console.log('vm.productsFilted.length:', vm.productsFilted.length);
+        console.log('vm.pagination.total_pages', vm.pagination.total_pages);
+        vm.pagination.current_page = page;
+        console.log('page:', page);
+        if (vm.pagination.current_page > 1) {
+          vm.pagination.has_pre = true;
+        } else {
+          vm.pagination.has_pre = false;
+        }
+        if (vm.pagination.current_page < vm.pagination.total_pages) {
+          vm.pagination.has_next = true;
+        } else {
+          vm.pagination.has_next = false;
+        }
+        console.log('pagination:', vm.pagination);
+        // 計算pagination資料
+        vm.productsRevealed = vm.productsFilted
+          .slice(numofPerpage * (vm.pagination.current_page - 1),
+            numofPerpage * vm.pagination.current_page);
+        console.log('vm.productsRevealed:', vm.productsRevealed);
+      });
     },
+
+
+
     // getProducts(page = 1) {
     //   const vm = this;
     //   const numofPerpage = 9;
@@ -414,13 +474,9 @@ export default {
     isLoading() {
       return this.$store.state.isLoading;
     },
-    productsRevealed() {
-      return this.$store.state.productsRevealed;
+    productsAll() {
+      return this.$store.state.isLoading;
     },
-    pagination() {
-      return this.$store.state.pagination;
-    }
-
   },
   created() {
     this.getProducts();
