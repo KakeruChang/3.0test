@@ -349,11 +349,15 @@ export default {
       }).then((response) => {
         vm.status.fileUploading = false;
         if (response.data.success) {
-          console.log('success');
+          console.log('5555555', response.data);
           // vm.tempProduct.imageUrl = response.data.imageUrl; 僅寫入
           vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl);// 寫入並綁定
+          response.data.message = '上傳成功';
+          response.data.status = 'success';
+          this.$store.dispatch('messageModules/updateMessage', response.data);
         } else {
-          this.$bus.$emit('message:push', response.data.message, 'danger');
+          response.data.status = 'danger';
+          this.$store.dispatch('messageModules/updateMessage', response.data);
         }
       })
     }

@@ -6,6 +6,10 @@
       v-for="(item, i) in messages"
       :key="i"
     >
+      <span>
+        <i class="far fa-thumbs-up" v-if="item.status==='success'"></i>
+        <i class="far fa-thumbs-down" v-else></i>
+      </span>
       {{ item.message }}
       <button
         type="button"
@@ -24,43 +28,21 @@ export default {
   name: 'Navbar',
   data() {
     return {
-      messages: [],
+      // messages: [],
     };
   },
   methods: {
     updateMessage(message, status) {
-      const timestamp = Math.floor(new Date() / 1000);
-      this.messages.push({
-        message,
-        status,
-        timestamp,
-      });
-      this.removeMessageWithTiming(timestamp);
+      this.$store.dispatch('updateMessage', { message, status });
     },
     removeMessage(num) {
-      this.messages.splice(num, 1);
-    },
-    removeMessageWithTiming(timestamp) {
-      const vm = this;
-      setTimeout(() => {
-        vm.messages.forEach((item, i) => {
-          if (item.timestamp === timestamp) {
-            vm.messages.splice(i, 1);
-          }
-        });
-      }, 5000);
+      this.$store.dispatch('removeMessage', num);
     },
   },
-  created() {
-    const vm = this;
-
-    // 自定義名稱 'message:push'
-    // message: 傳入參數
-    // status: 樣式，預設值為 warning
-    vm.$bus.$on('message:push', (message, status = 'warning') => {
-      // message對應上方變數 status對應bootstrap樣式(外層用on註冊)
-      vm.updateMessage(message, status);
-    });
+  computed: {
+    messages() {
+      return this.$store.state.messageModules.messages;
+    },
   },
 };
 </script>

@@ -1,7 +1,11 @@
 <template>
   <div class="dropdown ml-auto" v-if="carts.carts">
+    <loading :active.sync="isLoading"></loading>
     <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false">
-      <i class="fa fa-shopping-cart text-secondary fa-2x" aria-hidden="true"></i>
+      <i
+        class="fa fa-shopping-cart text-secondary fa-2x animated infinite flip slower"
+        aria-hidden="true"
+      ></i>
       <span class="badge badge-pill badge-danger">{{carts.carts.length}}</span>
     </button>
     <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px" data-offset="400">
@@ -26,7 +30,7 @@
                     <button
                       type="button"
                       class="btn btn-outline-danger btn-sm"
-                      @click="removeShoppingCartItem(item.id)"
+                      @click="removeCartItem(item.id)"
                     >
                       <i class="far fa-trash-alt"></i>
                     </button>
@@ -60,33 +64,38 @@
 </template>
 
 <script>
+// import { mapActions } from 'vuex';
+
 export default {
   name: 'Shoppingcart',
   data() {
     return {
-      carts: [],
+      // carts: [],
     };
   },
   methods: {
-    seeCart(newCart) {
-      const vm = this;
-      this.carts = Object.assign({}, newCart);
-      console.log('seeCart:', vm.carts);
+    removeCartItem(id) {
+      this.$store.dispatch('cartModules/removeCartItem', id);
     },
-    removeShoppingCartItem(id) {
-      // 將要刪除ID傳回
-      this.$bus.$emit('idofDeleteItem', id);
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
+    carts() {
+      return this.$store.state.cartModules.carts;
     },
   },
   created() {
-    const vm = this;
-    // 自定義名稱 'cartinfo'
-    // message: 傳入參數
-    // status: 樣式，預設值為 warning
-    vm.$bus.$on('cartinfo', (carts) => {
-      // message對應上方變數 status對應bootstrap樣式(外層用on註冊)
-      vm.seeCart(carts);
-    });
+    // this.getCart();
+    // const vm = this;
+    // // 自定義名稱 'cartinfo'
+    // // message: 傳入參數
+    // // status: 樣式，預設值為 warning
+    // vm.$bus.$on('cartinfo', (carts) => {
+    //   // message對應上方變數 status對應bootstrap樣式(外層用on註冊)
+    //   vm.seeCart(carts);
+    // });
   },
 };
 </script>

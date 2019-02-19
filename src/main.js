@@ -11,7 +11,7 @@ import zhTWValidate from 'vee-validate/dist/locale/zh_TW';
 
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import store from './store/store';
 import './bus';
 import currencyFilter from './filters/currency';
 import Pagination from './components/Pagination.vue';

@@ -232,6 +232,7 @@
 
 <script>
 import $ from 'jquery';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -251,7 +252,7 @@ export default {
         },
         message: '',
       },
-      carts: [],
+      // carts: [],
       coupon_code: '',
       productFilter: '',
       searchFilter: '',
@@ -259,72 +260,11 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      this.$store.dispatch('updatePage', page);
-      this.$store.dispatch('updateProductFilter', this.productFilter);
-      this.$store.dispatch('updateSearchFilter', this.searchFilter);
-      this.$store.dispatch('getProducts');
+      this.$store.dispatch('productsModules/updatePage', page);
+      this.$store.dispatch('productsModules/updateProductFilter', this.productFilter);
+      this.$store.dispatch('productsModules/updateSearchFilter', this.searchFilter);
+      this.$store.dispatch('productsModules/getProducts');
     },
-    // getProducts(page = 1) {
-    //   const vm = this;
-    //   const numofPerpage = 9;
-    //   /* const url = `${process.env.VUE_APP_APIPATH}/api/
-    //   ${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`; */
-    //   // const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products`;
-    //   const urlAll = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-    //   vm.$store.dispatch('updateLoading', true);
-    //   this.$http.get(urlAll).then((response) => {
-    //     vm.$store.dispatch('updateLoading', false);
-    //     vm.productsAll = response.data.products;
-    //     console.log('vm.productsFilted_before:', vm.productsFilted, vm.productsFilted.length);
-    //     // 以filter過濾資料
-    //     vm.productsFilted = vm.productsAll.slice().filter((item) => {
-    //       if (vm.productFilter === '' && vm.searchFilter === '') {
-    //         return true;
-    //       }
-    //       if (vm.productFilter === '' && vm.searchFilter !== ''
-    //         && (item.title.match(vm.searchFilter)
-    //           || item.content.match(vm.searchFilter)
-    //           || item.description.match(vm.searchFilter))) {
-    //         return true;
-    //       }
-    //       if (vm.productFilter !== '' && vm.searchFilter === '' && item.category.match(vm.productFilter)) {
-    //         return true;
-    //       }
-    //       if (item.category.match(vm.productFilter)
-    //         && (item.title.match(vm.searchFilter)
-    //           || item.content.match(vm.searchFilter)
-    //           || item.description.match(vm.searchFilter))) {
-    //         return true;
-    //       }
-    //       return false;
-    //     });
-    //     // 以filter過濾資料
-    //     console.log('vm.productsFilted_after:', vm.productsFilted, vm.productsFilted.length);
-    //     // 計算pagination資料
-    //     vm.pagination.total_pages = Math.ceil(vm.productsFilted.length / numofPerpage);
-    //     console.log('numofPerpage:', numofPerpage);
-    //     console.log('vm.productsFilted.length:', vm.productsFilted.length);
-    //     console.log('vm.pagination.total_pages', vm.pagination.total_pages);
-    //     vm.pagination.current_page = page;
-    //     console.log('page:', page);
-    //     if (vm.pagination.current_page > 1) {
-    //       vm.pagination.has_pre = true;
-    //     } else {
-    //       vm.pagination.has_pre = false;
-    //     }
-    //     if (vm.pagination.current_page < vm.pagination.total_pages) {
-    //       vm.pagination.has_next = true;
-    //     } else {
-    //       vm.pagination.has_next = false;
-    //     }
-    //     console.log('pagination:', vm.pagination);
-    //     // 計算pagination資料
-    //     vm.productsRevealed = vm.productsFilted
-    //       .slice(numofPerpage * (vm.pagination.current_page - 1),
-    //         numofPerpage * vm.pagination.current_page);
-    //     console.log('vm.productsRevealed:', vm.productsRevealed);
-    //   });
-    // },
     gettheProduct(id) {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
@@ -339,42 +279,18 @@ export default {
     },
     addtoCart(id, qty = 1) {
       const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       vm.status.loadingItem = id;
-      const cart = {
-        product_id: id,
-        qty,
-      };
-      this.$http.post(url, { data: cart }).then((response) => {
-        console.log(response.data);
+      this.$store.dispatch('cartModules/addtoCart', { id, qty }).then(() => {
         vm.status.loadingItem = '';
-        vm.getCart();
         $('#productModal').modal('hide');
       });
     },
-    getCart() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$store.dispatch('updateLoading', true);
-      this.$http.get(url).then((response) => {
-        console.log('getCart()_response:', response.data);
-        vm.$store.dispatch('updateLoading', false);
-        vm.carts = response.data.data;
-        console.log('getCart()_data(vm.carts):', vm.carts);
-        //
-        this.$bus.$emit('cartinfo', response.data.data);
-        //
-      });
-    },
+    ...mapActions('cartModules', ['getCart']),
+    // getCart() {
+    //   this.$store.dispatch('getCart');
+    // }
     removeCartItem(id) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.$store.dispatch('updateLoading', true);
-      this.$http.delete(url).then((response) => {
-        console.log(response.data);
-        vm.getCart();
-        vm.$store.dispatch('updateLoading', false);
-      });
+      this.$store.dispatch('cartModules/removeCartItem', id);
     },
     addCouponCode() {
       const vm = this;
@@ -415,23 +331,25 @@ export default {
       return this.$store.state.isLoading;
     },
     productsRevealed() {
-      return this.$store.state.productsRevealed;
+      return this.$store.state.productsModules.productsRevealed;
     },
     pagination() {
-      return this.$store.state.pagination;
-    }
-
+      return this.$store.state.productsModules.pagination;
+    },
+    carts() {
+      return this.$store.state.cartModules.carts;
+    },
   },
   created() {
     this.getProducts();
     this.getCart();
 
-    const vm = this;
-    // 自定義名稱 'idofDeleteItem'
-    // deleteID: 傳入參數
-    vm.$bus.$on('idofDeleteItem', (deleteID) => {
-      vm.removeCartItem(deleteID);
-    });
+    // const vm = this;
+    // // 自定義名稱 'idofDeleteItem'
+    // // deleteID: 傳入參數
+    // vm.$bus.$on('idofDeleteItem', (deleteID) => {
+    //   vm.removeCartItem(deleteID);
+    // });
   },
 };
 </script>

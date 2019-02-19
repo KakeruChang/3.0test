@@ -1,6 +1,7 @@
 <template>
   <div>
     <HomeNavbar/>
+    <Alert/>
     <!--  -->
     <!--  -->
     <div class="wrap-all">
@@ -21,10 +22,12 @@
 
 <script>
 import HomeNavbar from './HomeNavbar.vue';
+import Alert from '../AlertMessage';
 
 export default {
   components: {
     HomeNavbar,
+    Alert
   },
 };
 </script>
