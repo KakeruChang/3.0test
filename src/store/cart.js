@@ -21,10 +21,10 @@ export default {
             const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
             context.commit('LOADING', true, { root: true });
             axios.delete(url).then((response) => {
-                console.log('removeCartItem:response~~', response.data);
                 context.dispatch('getCart');
                 context.commit('LOADING', false, { root: true });
                 response.data.status = 'danger';
+                console.log('removeCartItem', response);
                 context.dispatch('messageModules/updateMessage', response.data, { root: true });
             });
         },

@@ -4,7 +4,7 @@
     <Alert/>
     <!--  -->
     <!--  -->
-    <div class="wrap-all">
+    <div>
       <main>
         <!-- <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"> -->
         <router-view></router-view>
@@ -22,23 +22,16 @@
 
 <script>
 import HomeNavbar from './HomeNavbar.vue';
-import Alert from '../AlertMessage';
+import Alert from '../AlertMessage.vue';
 
 export default {
   components: {
     HomeNavbar,
-    Alert
+    Alert,
   },
 };
 </script>
 <style scoped>
-.wrap-all {
-  /* background-image: url("../../assets/33615030586_bc0e948553_k (1).jpg"); */
-  background-repeat: no-repeat;
-  /* background-position: center;
-  background-size: cover; */
-  /* height: 853px; */
-}
 main {
   height: 100%;
 }

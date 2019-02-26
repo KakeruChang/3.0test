@@ -6,9 +6,12 @@ export default {
         messages: [],
     },
     actions: {
-        updateMessage(context, { message, status }) {
+        updateMessage(context, { message, status, data }) {
             const timestamp = Math.floor(new Date() / 1000);
-            context.commit('UPDATEMESSAGE', { message, status, timestamp });
+            context.commit('UPDATEMESSAGE',
+                {
+                    message, status, data, timestamp,
+                });
             context.dispatch('removeMessageWithTiming', timestamp);
         },
         removeMessage(context, num) {

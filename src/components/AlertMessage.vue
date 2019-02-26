@@ -6,17 +6,13 @@
       v-for="(item, i) in messages"
       :key="i"
     >
-      <span>
+      <span class="mr-5">
         <i class="far fa-thumbs-up" v-if="item.status==='success'"></i>
         <i class="far fa-thumbs-down" v-else></i>
+        <span v-if="item.data">{{ item.data.product.title }}x{{ item.data.qty }}</span>
+        {{ item.message }}
       </span>
-      {{ item.message }}
-      <button
-        type="button"
-        class="close"
-        @click="removeMessage(i)"
-        aria-label="Close"
-      >
+      <button type="button" class="close" @click="removeMessage(i)" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

@@ -5,7 +5,7 @@
       <div class="col-md-3 col-lg-2 pb-3 mx-2">
         <div class="nav nav-pills row" id="v-pills-tab" role="tablist" aria-orientation="vertical">
           <a
-            class="nav-link active btn btn-outline-primary col-md-12 col-sm-6 col-12"
+            class="nav-link active col-md-12 col-sm-6 col-12 productmenu-item"
             id="v-pills-home-tab"
             data-toggle="pill"
             href="#v-pills-home"
@@ -15,7 +15,7 @@
             @click.prevent="productFilter='';getProducts();"
           >全部</a>
           <a
-            class="nav-link btn btn-outline-primary col-md-12 col-sm-6 col-12"
+            class="nav-link col-md-12 col-sm-6 col-12 productmenu-item"
             id="v-pills-profile-tab"
             data-toggle="pill"
             href="#v-pills-profile"
@@ -25,7 +25,7 @@
             @click.prevent="productFilter='関東';getProducts();"
           >関東</a>
           <a
-            class="nav-link btn btn-outline-primary col-md-12 col-sm-6 col-12"
+            class="nav-link col-md-12 col-sm-6 col-12 productmenu-item"
             id="v-pills-messages-tab"
             data-toggle="pill"
             href="#v-pills-messages"
@@ -35,7 +35,7 @@
             @click="productFilter='関西';getProducts();"
           >関西</a>
           <a
-            class="nav-link btn btn-outline-primary col-md-12 col-sm-6 col-12"
+            class="nav-link col-md-12 col-sm-6 col-12 productmenu-item"
             id="v-pills-settings-tab"
             data-toggle="pill"
             href="#v-pills-settings"
@@ -63,6 +63,9 @@
             </div>
           </div>
         </div>
+        <div class="flyGift">
+          <i class="fas fa-gift fa-2x"></i>
+        </div>
         <div class="col-md-12">
           <Pagination class="pt-2" :page-data="pagination" @pagemove="getProducts"></Pagination>
         </div>
@@ -83,7 +86,9 @@
                 <h5 class="card-title">
                   <a href="#" class="text-dark">{{item.title}}</a>
                 </h5>
-                <p class="card-text">{{item.content}}</p>
+                <div class="frontproduct-text">
+                  <p class="card-text">{{item.content}}</p>
+                </div>
                 <div class="d-flex justify-content-between align-items-baseline">
                   <div class="h5" v-if="!item.price">{{item.origin_price}} 元</div>
                   <del class="h6" v-if="item.price">原價{{item.origin_price}}元</del>
@@ -102,7 +107,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-danger btn-sm ml-auto"
-                  @click="addtoCart(item.id)"
+                  @click="addtoCart(item.id);"
                 >
                   <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
                   加到購物車
@@ -277,13 +282,50 @@ export default {
         vm.status.loadingItem = '';
       });
     },
+    moveTest0() {
+      console.log('gift-x', event.x);
+      console.log('gift-y', event.y);
+      const clickX = event.x;
+      const clickY = event.y;
+      $('.flyGift').css({ 'display': '', });
+      $('.flyGift').css({ 'left': `${clickX - 318}px`, 'top': `${clickY - 86}px`, 'z-index': '9999' });
+      setTimeout(function () {
+        $('.flyGift').css({ 'left': '90%', 'top': '-4%' });
+      }, 1000);
+    },
+    returnTesst0() {
+      $('.flyGift').css({ 'z-index': '-1' });
+      $('.flyGift').css({ 'left': '', 'top': '' });
+    },
     addtoCart(id, qty = 1) {
+      console.log('e', event);
+      const ex = event.x;
+      const ey = event.x;
       const vm = this;
-      vm.status.loadingItem = id;
-      this.$store.dispatch('cartModules/addtoCart', { id, qty }).then(() => {
-        vm.status.loadingItem = '';
-        $('#productModal').modal('hide');
-      });
+      vm.moveTest0();
+      //
+      setTimeout(function () {
+        $('.flyGift').css({ 'display': 'none', });
+        vm.status.loadingItem = id;
+        vm.$store.dispatch('cartModules/addtoCart', { id, qty }).then(() => {
+          vm.status.loadingItem = '';
+          $('#productModal').modal('hide');
+          //
+          vm.returnTesst0();
+          //
+        });
+      }, 3000);
+      // 成功備份
+      // setTimeout(function () {
+      //   $('.test-true').css({ 'bottom': '2000px', 'left': '2000px' });
+      //   setTimeout(function () {
+      //     vm.status.loadingItem = id;
+      //     vm.$store.dispatch('cartModules/addtoCart', { id, qty }).then(() => {
+      //       vm.status.loadingItem = '';
+      //       $('#productModal').modal('hide');
+      //     });
+      //   }, 1000);
+      // }, 50);
     },
     ...mapActions('cartModules', ['getCart']),
     // getCart() {
@@ -292,38 +334,8 @@ export default {
     removeCartItem(id) {
       this.$store.dispatch('cartModules/removeCartItem', id);
     },
-    addCouponCode() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      const coupon = {
-        code: vm.coupon_code,
-      };
-      vm.$store.dispatch('updateLoading', true);
-      this.$http.post(url, { data: coupon }).then((response) => {
-        console.log(response.data);
-        vm.getCart();
-        vm.$store.dispatch('updateLoading', false);
-      });
-    },
-    createOrder() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
-      const order = vm.form;
-      vm.$store.dispatch('updateLoading', true);
-      this.$validator.validate().then((result) => {
-        if (result) {
-          this.$http.post(url, { data: order }).then((response) => {
-            console.log('訂單已建立', response.data);
-            if (response.data.success) {
-              vm.$router.push(`/customer_checkout/${response.data.orderId}`);// 使用router轉換頁面
-            }
-            // vm.getCart();
-            vm.$store.dispatch('updateLoading', false);
-          });
-        } else {
-          console.log('欄位不完整');
-        }
-      });
+    updateActiveOfNavbar(item) {
+      this.$store.dispatch('updateHomeActive', item);
     },
   },
   computed: {
@@ -343,6 +355,7 @@ export default {
   created() {
     this.getProducts();
     this.getCart();
+    this.updateActiveOfNavbar('product');
 
     // const vm = this;
     // // 自定義名稱 'idofDeleteItem'
@@ -376,7 +389,38 @@ export default {
     overflow-y: scroll;
   }
 }
+.frontproduct-text {
+  height: 150px;
+  overflow-y: hidden;
+}
+.productmenu-item {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  box-shadow: 0px 3px 5px rgba(20%, 20%, 40%, 0.6);
+}
 
+.nav-link.active {
+  background-color: rgba(0, 0, 0, 0);
+  text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff;
+}
+.nav-pills .nav-link {
+  border-radius: 0;
+}
+.cart-footer {
+  position: relative;
+}
+.flyGift {
+  color: rgb(5, 81, 167);
+  z-index: 50;
+  top: "";
+  left: "";
+  bottom: "";
+  right: "";
+  transition: all 3s cubic-bezier(1, 0.08, 0, 1.19);
+  position: absolute;
+  z-index: -1;
+}
 /* SASS
 .btn-cart
     background-color: transparent

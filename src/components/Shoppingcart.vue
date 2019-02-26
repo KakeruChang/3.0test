@@ -54,7 +54,11 @@
             </table>
           </div>
         </div>
-        <router-link class="btn btn-success btn-block" to="/orders" v-if="carts.carts.length!==0">
+        <router-link
+          class="btn btn-success btn-block"
+          to="/finishorder/orders"
+          v-if="carts.carts.length!==0"
+        >
           <i class="fa fa-shopping-cart" aria-hidden="true"></i> 結帳去
         </router-link>
         <!--  -->

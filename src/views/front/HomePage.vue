@@ -15,24 +15,36 @@
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img
-              class="d-block w-100"
+              class="d-block homepage-carousel-pic"
               src="../../assets/home_bg/14536971751_77833884e5_k.jpg"
               alt="First slide"
             >
+            <div class="carousel-caption d-md-block">
+              <h3 class="font-weigh-bold">心動不如馬上行動</h3>
+              <p class="h3 my-auto">優惠代碼:tokyo</p>
+            </div>
           </div>
           <div class="carousel-item">
             <img
-              class="d-block w-100"
+              class="d-block homepage-carousel-pic"
               src="../../assets/home_bg/30691690338_a2e5ab4d31_k.jpg"
               alt="Second slide"
             >
+            <div class="carousel-caption d-md-block">
+              <h3 class="font-weigh-bold">你還在這邊幹嘛</h3>
+              <p class="h3 my-auto">優惠代碼:osaka</p>
+            </div>
           </div>
           <div class="carousel-item">
             <img
-              class="d-block w-100"
+              class="d-block homepage-carousel-pic"
               src="../../assets/home_bg/31781713132_96cfc765f3_k.jpg"
               alt="Third slide"
             >
+            <div class="carousel-caption d-md-block">
+              <h3 class="font-weigh-bold">機會不等人</h3>
+              <p class="h3 my-auto">優惠代碼:japan</p>
+            </div>
           </div>
         </div>
         <a
@@ -61,49 +73,27 @@
 
 <script>
 import $ from 'jquery';
+
 $('.carousel').carousel({
   interval: 1000,
-})
+});
 export default {
-  // data() {
-  //   return {
-  //     carts: [],
-  //   };
-  // },
-  // methods: {
-  //   getCart() {
-  //     const vm = this;
-  //     const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-  //     this.$http.get(url).then((response) => {
-  //       console.log('getCart()_response:', response.data);
-  //       vm.carts = response.data.data;
-  //       console.log('getCart()_data(vm.carts):', vm.carts);
-  //       //
-  //       this.$bus.$emit('cartinfo', response.data.data);
-  //       //
-  //     });
-  //   },
-  //   removeCartItem(id) {
-  //     const vm = this;
-  //     const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-  //     vm.isLoading = true;
-  //     this.$http.delete(url).then((response) => {
-  //       console.log(response.data);
-  //       vm.getCart();
-  //       vm.isLoading = false;
-  //     });
-  //   },
-  // },
-  // created() {
-  //   this.getCart();
-  //   const vm = this;
-  //   // 自定義名稱 'idofDeleteItem'
-  //   // deleteID: 傳入參數
-  //   vm.$bus.$on('idofDeleteItem', (deleteID) => {
-  //     vm.removeCartItem(deleteID)
-  //   });
-  // }
-}
+  methods: {
+    updateActiveOfNavbar(item) {
+      this.$store.dispatch('updateHomeActive', item);
+    },
+  },
+  created() {
+    this.updateActiveOfNavbar('homepage');
+  },
+};
 </script>
-
-
+<style scoped>
+.homepage-carousel-pic {
+  width: 2048px;
+}
+.carousel-caption {
+  bottom: 50%;
+  background-color: rgba(50, 50, 50, 0.2);
+}
+</style>

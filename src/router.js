@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import Home from './views/Home.vue';
 
 Vue.use(Router);
 
@@ -10,19 +9,6 @@ export default new Router({
       path: '*',
       redirect: '/HomePage',
     },
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld,
-    //   meta: { requiresAuth: true },
-    // },
-    // {
-    //   path: '/',
-    //   name: 'DashboardforCustomer',
-    //   component: Dashboard,
-    //   children: [
-    //   ],
-    // },
     {
       path: '/',
       name: 'Home',
@@ -39,17 +25,30 @@ export default new Router({
           name: 'FrontProducts',
           component: () => import('./views/front/FrontProducts.vue'),
         },
+        {
+          path: 'about',
+          name: 'About',
+          component: () => import('./views/front/About.vue'),
+        },
       ],
     },
     {
-      path: '/orders',
-      name: 'Orders',
-      component: () => import('./views/front/Orders.vue'),
-    },
-    {
-      path: '/checkout/:orderId',
-      name: 'Checkout',
-      component: () => import('./views/front/Checkout.vue'),
+      path: '/finishorder',
+      name: 'Finishorder',
+      component: () => import('./components/Home/CheckoutTitle.vue'),
+      redirect: '/finishorder/orders',
+      children: [
+        {
+          path: 'orders',
+          name: 'Orders',
+          component: () => import('./views/front/Orders.vue'),
+        },
+        {
+          path: '/checkout/:orderId',
+          name: 'Checkout',
+          component: () => import('./views/front/Checkout.vue'),
+        },
+      ],
     },
     {
       path: '/login',

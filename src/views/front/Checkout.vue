@@ -93,12 +93,16 @@ export default {
         }
         vm.isLoading = false;
       });
-    }
+    },
+    updateActiveOfCheckout(item) {
+      this.$store.dispatch('updateCheckoutActive', item);
+    },
   },
   created() {
     this.orderId = this.$route.params.orderId;
     this.getOrder();
     console.log('this.orderId:', this.orderId);
+    this.updateActiveOfCheckout('checkout');
   }
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
+    <Alert/>
     <!--訂單-->
     <div class="row justify-content-center" v-if="carts.total!==0">
       <div class="col-md-8">
@@ -58,14 +59,18 @@
             </tr>
           </tfoot>
         </table>
-        <div class="input-group mb-5 input-group-sm">
-          <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" @click="addCouponCode">套用優惠碼</button>
+        <div class="row justify-content-between">
+          <div class="col-md-6">
+            <div class="input-group mb-5 input-group-sm">
+              <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" @click="addCouponCode">套用優惠碼</button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="text-right">
-          <router-link class="btn btn-success" to="/frontProducts">繼續逛逛</router-link>
+          <div class="text-right col-md-3">
+            <router-link class="btn btn-success" to="/frontProducts">繼續逛逛</router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -78,7 +83,11 @@
       </div>
     </div>
     <!--  -->
-    <div class="my-5 row justify-content-center" v-if="carts.total!==0">
+    <div
+      class="py-5 row justify-content-center"
+      v-if="carts.total!==0"
+      style="background:rgb(180,180,180);"
+    >
       <form class="col-md-6" @submit.prevent="createOrder">
         <div class="form-group">
           <label for="useremail">Email</label>
@@ -170,10 +179,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import Alert from '../../components/AlertMessage.vue';
+
 export default {
+  components: {
+    Alert,
+  },
   data() {
     return {
-      isLoading: false, // true時啟動loading效果
       form: {
         user: {
           name: '',
@@ -184,31 +198,13 @@ export default {
         },
         message: '',
       },
-      carts: [],
       coupon_code: '',
     };
   },
   methods: {
-    getCart() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.isLoading = true;
-      this.$http.get(url).then((response) => {
-        console.log(response.data);
-        vm.isLoading = false;
-        vm.carts = response.data.data;
-        console.log(vm.carts);
-      });
-    },
+    ...mapActions('cartModules', ['getCart']),
     removeCartItem(id) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.isLoading = true;
-      this.$http.delete(url).then((response) => {
-        console.log(response.data);
-        vm.getCart();
-        vm.isLoading = false;
-      });
+      this.$store.dispatch('cartModules/removeCartItem', id);
     },
     addCouponCode() {
       const vm = this;
@@ -216,18 +212,18 @@ export default {
       const coupon = {
         code: vm.coupon_code,
       };
-      vm.isLoading = true;
+      vm.$store.commit('LOADING', true);
       this.$http.post(url, { data: coupon }).then((response) => {
         console.log(response.data);
         vm.getCart();
-        vm.isLoading = false;
+        vm.$store.commit('LOADING', false);
       });
     },
     createOrder() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       const order = vm.form;
-      vm.isLoading = true;
+      vm.$store.commit('LOADING', true);
       this.$validator.validate().then((result) => {
         if (result) {
           this.$http.post(url, { data: order }).then((response) => {
@@ -236,16 +232,35 @@ export default {
               vm.$router.push(`/checkout/${response.data.orderId}`);// 使用router轉換頁面
             }
             // vm.getCart();
-            vm.isLoading = false;
+            vm.$store.commit('LOADING', false);
           });
         } else {
-          console.log('欄位不完整');
+          console.log('欄位不完整', result);
+          const response = {
+            message: '欄位不完整',
+            status: 'danger',
+          };
+          console.log('欄位不完整?', response);
+          vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
+          vm.$store.commit('LOADING', false);
         }
       });
+    },
+    updateActiveOfCheckout(item) {
+      this.$store.dispatch('updateCheckoutActive', item);
+    },
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
+    carts() {
+      return this.$store.state.cartModules.carts;
     },
   },
   created() {
     this.getCart();
+    this.updateActiveOfCheckout('orders');
   },
 };
 </script>
