@@ -44,6 +44,11 @@ export default new Router({
           component: () => import('./views/front/Orders.vue'),
         },
         {
+          path: 'address',
+          name: 'Address',
+          component: () => import('./views/front/Address.vue'),
+        },
+        {
           path: '/checkout/:orderId',
           name: 'Checkout',
           component: () => import('./views/front/Checkout.vue'),

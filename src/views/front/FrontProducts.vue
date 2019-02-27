@@ -285,7 +285,7 @@ export default {
     moveGift() {
       const clickX = event.clientX;
       const clickY = event.clientY;
-      $('.flyGift').css({ 'display': '', });
+      $('.flyGift').css({ 'display': 'inline', });
       $('.flyGift').css({ 'left': `${clickX}px`, 'top': `${clickY}px`, 'z-index': '9999' });
       setTimeout(function () {
         $('.flyGift').css({ 'left': '93%', 'top': '3%' });
@@ -378,25 +378,12 @@ export default {
   font-weight: bold;
   box-shadow: 0px 3px 5px rgba(20%, 20%, 40%, 0.6);
 }
-
 .nav-link.active {
   background-color: rgba(0, 0, 0, 0);
   text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff;
 }
 .nav-pills .nav-link {
   border-radius: 0;
-}
-.cart-footer {
-  position: relative;
-}
-.flyGift {
-  color: rgb(5, 81, 167);
-  z-index: 50;
-  top: "";
-  left: "";
-  transition: all 1s cubic-bezier(1, 0.08, 0, 1.19);
-  position: fixed;
-  z-index: -1;
 }
 /* SASS
 .btn-cart

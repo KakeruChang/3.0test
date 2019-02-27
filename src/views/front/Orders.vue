@@ -68,8 +68,9 @@
               </div>
             </div>
           </div>
-          <div class="text-right col-md-3">
-            <router-link class="btn btn-success" to="/frontProducts">繼續逛逛</router-link>
+          <div class="text-right">
+            <router-link class="btn btn-danger mx-3" to="/finishorder/address">填寫寄送資訊</router-link>
+            <router-link class="btn btn-success mx-3" to="/frontProducts">繼續逛逛</router-link>
           </div>
         </div>
       </div>
@@ -83,7 +84,7 @@
       </div>
     </div>
     <!--  -->
-    <div
+    <!-- <div
       class="py-5 row justify-content-center"
       v-if="carts.total!==0"
       style="background:rgb(180,180,180);"
@@ -173,7 +174,7 @@
           <button class="btn btn-danger">送出訂單</button>
         </div>
       </form>
-    </div>
+    </div>-->
     <!--  -->
   </div>
 </template>
@@ -188,16 +189,6 @@ export default {
   },
   data() {
     return {
-      form: {
-        user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: '',
-          payment_method: '',
-        },
-        message: '',
-      },
       coupon_code: '',
     };
   },
@@ -217,33 +208,6 @@ export default {
         console.log(response.data);
         vm.getCart();
         vm.$store.commit('LOADING', false);
-      });
-    },
-    createOrder() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
-      const order = vm.form;
-      vm.$store.commit('LOADING', true);
-      this.$validator.validate().then((result) => {
-        if (result) {
-          this.$http.post(url, { data: order }).then((response) => {
-            console.log('訂單已建立', response.data);
-            if (response.data.success) {
-              vm.$router.push(`/checkout/${response.data.orderId}`);// 使用router轉換頁面
-            }
-            // vm.getCart();
-            vm.$store.commit('LOADING', false);
-          });
-        } else {
-          console.log('欄位不完整', result);
-          const response = {
-            message: '欄位不完整',
-            status: 'danger',
-          };
-          console.log('欄位不完整?', response);
-          vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
-          vm.$store.commit('LOADING', false);
-        }
       });
     },
     updateActiveOfCheckout(item) {

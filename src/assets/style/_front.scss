@@ -1,0 +1,24 @@
+/*
+ * Frontproducts
+ */
+
+.flyGift {
+    color: rgb(5, 81, 167);
+    z-index: 50;
+    top: "";
+    left: "";
+    display: none;
+    transition: all 1s cubic-bezier(1, 0.08, 0, 1.19);
+    position: fixed;
+    z-index: -1;
+}
+
+// @media (min-width: 541px) {
+    //     .wrap-FrontProducts {
+    //         background-image: url("../home_bg/product_.jpg");
+    //         height: 1152px;
+    //     }
+    //     .cardrealved {
+    //         overflow-y: scroll;
+    //     }
+    // }
