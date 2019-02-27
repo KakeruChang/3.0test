@@ -282,50 +282,29 @@ export default {
         vm.status.loadingItem = '';
       });
     },
-    moveTest0() {
-      console.log('gift-x', event.x);
-      console.log('gift-y', event.y);
-      const clickX = event.x;
-      const clickY = event.y;
+    moveGift() {
+      const clickX = event.clientX;
+      const clickY = event.clientY;
       $('.flyGift').css({ 'display': '', });
-      $('.flyGift').css({ 'left': `${clickX - 318}px`, 'top': `${clickY - 86}px`, 'z-index': '9999' });
+      $('.flyGift').css({ 'left': `${clickX}px`, 'top': `${clickY}px`, 'z-index': '9999' });
       setTimeout(function () {
-        $('.flyGift').css({ 'left': '90%', 'top': '-4%' });
-      }, 1000);
+        $('.flyGift').css({ 'left': '93%', 'top': '3%' });
+      }, 50);
     },
-    returnTesst0() {
-      $('.flyGift').css({ 'z-index': '-1' });
-      $('.flyGift').css({ 'left': '', 'top': '' });
+    returnGift() {
+      $('.flyGift').css({ 'z-index': '-1', 'left': '', 'top': '', 'display': 'none', });
     },
     addtoCart(id, qty = 1) {
-      console.log('e', event);
-      const ex = event.x;
-      const ey = event.x;
       const vm = this;
-      vm.moveTest0();
-      //
+      vm.moveGift();
       setTimeout(function () {
-        $('.flyGift').css({ 'display': 'none', });
+        vm.returnGift();
         vm.status.loadingItem = id;
         vm.$store.dispatch('cartModules/addtoCart', { id, qty }).then(() => {
           vm.status.loadingItem = '';
           $('#productModal').modal('hide');
-          //
-          vm.returnTesst0();
-          //
         });
-      }, 3000);
-      // 成功備份
-      // setTimeout(function () {
-      //   $('.test-true').css({ 'bottom': '2000px', 'left': '2000px' });
-      //   setTimeout(function () {
-      //     vm.status.loadingItem = id;
-      //     vm.$store.dispatch('cartModules/addtoCart', { id, qty }).then(() => {
-      //       vm.status.loadingItem = '';
-      //       $('#productModal').modal('hide');
-      //     });
-      //   }, 1000);
-      // }, 50);
+      }, 1000);
     },
     ...mapActions('cartModules', ['getCart']),
     // getCart() {
@@ -415,10 +394,8 @@ export default {
   z-index: 50;
   top: "";
   left: "";
-  bottom: "";
-  right: "";
-  transition: all 3s cubic-bezier(1, 0.08, 0, 1.19);
-  position: absolute;
+  transition: all 1s cubic-bezier(1, 0.08, 0, 1.19);
+  position: fixed;
   z-index: -1;
 }
 /* SASS

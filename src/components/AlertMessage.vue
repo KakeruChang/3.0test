@@ -28,11 +28,8 @@ export default {
     };
   },
   methods: {
-    updateMessage(message, status) {
-      this.$store.dispatch('updateMessage', { message, status });
-    },
     removeMessage(num) {
-      this.$store.dispatch('removeMessage', num);
+      this.$store.dispatch('messageModules/removeMessage', num);
     },
   },
   computed: {
