@@ -5,20 +5,81 @@
 .flyGift {
     color: rgb(5, 81, 167);
     z-index: 50;
-    top: "";
-    left: "";
+    top: -3%;
+    left: -3%;
     display: none;
     transition: all 1s cubic-bezier(1, 0.08, 0, 1.19);
     position: fixed;
     z-index: -1;
 }
 
-// @media (min-width: 541px) {
-    //     .wrap-FrontProducts {
-    //         background-image: url("../home_bg/product_.jpg");
-    //         height: 1152px;
-    //     }
-    //     .cardrealved {
-    //         overflow-y: scroll;
-    //     }
-    // }
+.frontproduct-text {
+    height: 150px;
+    overflow-y: hidden;
+}
+
+.productmenu-item {
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0px 3px 5px rgba(20%, 20%, 40%, 0.6);
+    color: #fff;
+}
+
+.productmenu-item:hover {
+    color: #fff;
+    text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff;
+}
+
+.btn-cart {
+    background-color: transparent;
+    position: relative;
+}
+
+.btn-cart .badge {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+}
+
+.nav-link.active.nav-link-frontproducts {
+    background-color: rgba(0, 0, 0, 0);
+    text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff;
+}
+
+.nav-pills .nav-link {
+    border-radius: 0;
+}
+
+.shoppingcart-left-menu {
+    overflow-y: scroll;
+    height: 500px;
+}
+
+// .dropdown-menu-right {
+//     right: 0;
+//     left: auto;
+// }
+@media (min-width: 541px) {
+    .wrap-FrontProducts {
+        background-image: url("./assets/home_bg/product_.jpg");
+        height: 1152px;
+    }
+    .cardrealved {
+        overflow-y: scroll;
+    }
+}
+
+@media (max-width:540px) {
+    .nav-pills-frontproducts {
+        background: rgb(180, 180, 180);
+    }
+}
+
+/*
+ * Shoppingvart
+ */
+
+.shoppingcart-menu {
+    overflow-y: scroll;
+    height: 500px;
+}

@@ -1,0 +1,28 @@
+/*
+ * HomeNavbar
+ */
+
+.home-navbar-item:hover,
+.home-navbar-item-active {
+    color: rgb(255, 255, 255);
+    text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff;
+}
+
+.home-navbar-item {
+    text-decoration: none !important;
+    color: rgb(255, 255, 255);
+}
+
+.homenavbar {
+    background: rgba(150, 150, 150, 0) !important;
+}
+
+@media (max-width: 767px) {
+    .homenavbar {
+        background: rgb(150, 150, 150) !important;
+    }
+}
+
+/*
+ * Pagination
+ */

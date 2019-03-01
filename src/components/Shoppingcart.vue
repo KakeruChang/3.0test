@@ -13,7 +13,7 @@
       <div class="px-3 py-4" v-if="carts.total!==0">
         <h6>已選擇商品</h6>
         <div class="row justify-content-center">
-          <div class="col-md-12">
+          <div class="col-md-12 shoppingcart-left-menu">
             <table class="table my-5">
               <thead>
                 <tr>
@@ -104,7 +104,7 @@ export default {
 };
 </script>
 <style scoped>
-.btn-cart {
+/* .btn-cart {
   background-color: transparent;
   position: relative;
 }

@@ -37,6 +37,7 @@
             >關於我們</router-link>
           </li>
         </ul>
+        <Search class="ml-auto"/>
         <Shoppingcart></Shoppingcart>
         <router-link class="nav-link ml-1 btn btn-outline-primary" to="/admin/products">後台</router-link>
       </div>
@@ -59,22 +60,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.home-navbar-item {
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-}
-.home-navbar-item:hover,
-.home-navbar-item-active {
-  color: rgb(255, 255, 255);
-  text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff;
-}
-.homenavbar {
-  background: rgba(150, 150, 150, 0) !important;
-}
-@media (max-width: 767px) {
-  .homenavbar {
-    background: rgb(150, 150, 150) !important;
-  }
-}
-</style>
+

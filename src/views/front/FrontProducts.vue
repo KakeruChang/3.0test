@@ -3,9 +3,14 @@
     <loading :active.sync="isLoading"></loading>
     <div class="row" style="height:100%;padding-top:60px">
       <div class="col-md-3 col-lg-2 pb-3 mx-2">
-        <div class="nav nav-pills row" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <div
+          class="nav nav-pills nav-pills-frontproducts row"
+          id="v-pills-tab"
+          role="tablist"
+          aria-orientation="vertical"
+        >
           <a
-            class="nav-link active col-md-12 col-sm-6 col-12 productmenu-item"
+            class="nav-link active nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             id="v-pills-home-tab"
             data-toggle="pill"
             href="#v-pills-home"
@@ -15,7 +20,7 @@
             @click.prevent="productFilter='';getProducts();"
           >全部</a>
           <a
-            class="nav-link col-md-12 col-sm-6 col-12 productmenu-item"
+            class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             id="v-pills-profile-tab"
             data-toggle="pill"
             href="#v-pills-profile"
@@ -25,7 +30,7 @@
             @click.prevent="productFilter='関東';getProducts();"
           >関東</a>
           <a
-            class="nav-link col-md-12 col-sm-6 col-12 productmenu-item"
+            class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             id="v-pills-messages-tab"
             data-toggle="pill"
             href="#v-pills-messages"
@@ -35,7 +40,7 @@
             @click="productFilter='関西';getProducts();"
           >関西</a>
           <a
-            class="nav-link col-md-12 col-sm-6 col-12 productmenu-item"
+            class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             id="v-pills-settings-tab"
             data-toggle="pill"
             href="#v-pills-settings"
@@ -47,8 +52,8 @@
         </div>
       </div>
       <div class="row col-md-9 col-lg-10" style="padding-bottom:100px;height:100%;">
-        <div class="row col-md-12">
-          <!-- <div class="mb-5 col-md-12 row"> -->
+        <!--  -->
+        <!-- <div class="row col-md-12">
           <div class="col-md-4">
             <div class="input-group">
               <input
@@ -59,10 +64,13 @@
                 aria-describedby="basic-addon1"
                 v-model="searchFilter"
               >
-              <button type="text" class="btn btn-primary" @click="getProducts()">搜尋</button>
+              <button type="text" class="btn btn-primary" @click="getProducts()">
+                <i class="fas fa-search"></i>
+              </button>
             </div>
           </div>
-        </div>
+        </div>-->
+        <!--  -->
         <div class="flyGift">
           <i class="fas fa-gift fa-2x"></i>
         </div>
@@ -133,7 +141,7 @@
         <div class="px-3 py-4" v-if="carts.total!==0">
           <h6>已選擇商品</h6>
           <div class="row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-md-12 shoppingcart-left-menu">
               <table class="table my-5">
                 <thead>
                   <tr>
@@ -174,7 +182,11 @@
               </table>
             </div>
           </div>
-          <router-link class="btn btn-primary btn-block" to="/orders" v-if="carts.carts.length!==0">
+          <router-link
+            class="btn btn-primary btn-block"
+            to="/finishorder/orders"
+            v-if="carts.carts.length!==0"
+          >
             <i class="fa fa-shopping-cart" aria-hidden="true"></i> 結帳去
           </router-link>
           <!--  -->
@@ -267,7 +279,7 @@ export default {
     getProducts(page = 1) {
       this.$store.dispatch('productsModules/updatePage', page);
       this.$store.dispatch('productsModules/updateProductFilter', this.productFilter);
-      this.$store.dispatch('productsModules/updateSearchFilter', this.searchFilter);
+      // this.$store.dispatch('productsModules/updateSearchFilter', this.searchFilter);//
       this.$store.dispatch('productsModules/getProducts');
     },
     gettheProduct(id) {
@@ -285,19 +297,27 @@ export default {
     moveGift() {
       const clickX = event.clientX;
       const clickY = event.clientY;
-      $('.flyGift').css({ 'display': 'inline', });
-      $('.flyGift').css({ 'left': `${clickX}px`, 'top': `${clickY}px`, 'z-index': '9999' });
-      setTimeout(function () {
-        $('.flyGift').css({ 'left': '93%', 'top': '3%' });
+      $('.flyGift').css({
+        display: 'inline',
+      });
+      $('.flyGift').css({
+        left: `${clickX}px`, top: `${clickY}px`, 'z-index': '999',
+      });
+      setTimeout(() => {
+        $('.flyGift').css({
+          left: '93%', top: '3%',
+        });
       }, 50);
     },
     returnGift() {
-      $('.flyGift').css({ 'z-index': '-1', 'left': '', 'top': '', 'display': 'none', });
+      $('.flyGift').css({
+        'z-index': '-1', left: '-3%', top: '-3%', display: 'none',
+      });
     },
     addtoCart(id, qty = 1) {
       const vm = this;
       vm.moveGift();
-      setTimeout(function () {
+      setTimeout(() => {
         vm.returnGift();
         vm.status.loadingItem = id;
         vm.$store.dispatch('cartModules/addtoCart', { id, qty }).then(() => {
@@ -346,55 +366,15 @@ export default {
 };
 </script>
 <style scoped>
-.btn-cart {
-  background-color: transparent;
-  position: relative;
+.searchInput {
+  border: none;
+  font-size: 18px;
 }
-.btn-cart .badge {
-  position: absolute;
-  top: -1px;
-  right: -1px;
+.searchInput:focus {
+  outline: none;
 }
-.dropdown-menu-right {
-  right: 0;
-  left: auto;
+.wrapofSearch {
+  background-color: #fff;
+  border-radius: 24px;
 }
-@media (min-width: 541px) {
-  .wrap-FrontProducts {
-    background-image: url("../../assets/home_bg/product_.jpg");
-    height: 1152px;
-  }
-  .cardrealved {
-    overflow-y: scroll;
-  }
-}
-.frontproduct-text {
-  height: 150px;
-  overflow-y: hidden;
-}
-.productmenu-item {
-  text-align: center;
-  font-size: 30px;
-  font-weight: bold;
-  box-shadow: 0px 3px 5px rgba(20%, 20%, 40%, 0.6);
-}
-.nav-link.active {
-  background-color: rgba(0, 0, 0, 0);
-  text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff;
-}
-.nav-pills .nav-link {
-  border-radius: 0;
-}
-/* SASS
-.btn-cart
-    background-color: transparent
-    position: relative
-    .badge
-        position: absolute
-        top: -1px
-        right: -1px
-.dropdown-menu-right
-    right: 0
-    left: auto
- */
 </style>

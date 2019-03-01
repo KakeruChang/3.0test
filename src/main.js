@@ -15,6 +15,7 @@ import store from './store/store';
 import './bus';
 import currencyFilter from './filters/currency';
 import Pagination from './components/Pagination.vue';
+import Search from './components/Search.vue';
 // import Shoppingcart from './components/Shoppingcart.vue';
 
 Vue.config.productionTip = false;
@@ -28,6 +29,7 @@ VeeValidate.Validator.localize('zh_tw', zhTWValidate);
 
 Vue.component('Loading', Loading); // 全域啟用,其他地方使用不需重新載入
 Vue.component('Pagination', Pagination);
+Vue.component('Search', Search);
 // Vue.component('Shoppingcart', Shoppingcart);
 Vue.filter('currency', currencyFilter);
 
