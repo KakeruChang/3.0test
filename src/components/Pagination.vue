@@ -43,7 +43,7 @@ export default {
   props: {
     pageData: {
       type: Object,
-      default: function () { return {} },
+      default: function () { return {}; },
     },
   },
   methods: {
@@ -63,7 +63,7 @@ export default {
   border-bottom-right-radius: 0;
 }
 .page-item .page-link {
-  background-color: rgba(100, 100, 100, 0);
+  background-color: rgba(100, 100, 100, 0.3);
   border-color: #fff;
   color: #fff;
 }

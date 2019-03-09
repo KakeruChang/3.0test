@@ -4,26 +4,55 @@
     <Alert/>
     <!--訂單-->
     <div class="row justify-content-center" v-if="carts.total!==0">
-      <div class="col-md-8">
-        <table class="table my-5">
+      <div class="col-lg-8 row">
+        <div class="row col-md-12 border-b my-2 py-2" v-for="item in carts.carts" :key="item.id">
+          <div
+            class="col-md-4"
+            :style="{ 'background-image': `url(${item.product.imageUrl})` }"
+            style=" background-size: cover; background-position: center"
+          >
+            <!-- <img class="img-fluid" :src="item.product.imageUrl" alt> -->
+          </div>
+          <div class="col-md-1 col-1">
+            <span class="badge badge-secondary">{{item.product.category}}</span>
+          </div>
+          <div class="col-md-3 col-4">
+            {{item.product.title}}
+            <div class="text-success" v-if="item.coupon">已套用優惠券
+              <p>
+                {{item.coupon.title}}:折扣
+                <span class="text-danger">{{item.coupon.percent}}</span>%
+              </p>
+            </div>
+          </div>
+          <div class="col-md-1 col-2">{{item.qty}}/{{item.product.unit}}</div>
+          <div class="col-md-2 col-3">{{item.total}}元</div>
+          <div class="col-md-1 col-2">
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              @click="removeCartItem(item.id)"
+            >
+              <i class="far fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+        <!-- <table class="table my-5">
           <thead>
             <tr>
               <th></th>
               <th>品名</th>
               <th>數量</th>
               <th>單價</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in carts.carts" :key="item.id">
               <td>
-                <button
-                  type="button"
-                  class="btn btn-outline-danger btn-sm"
-                  @click="removeCartItem(item.id)"
-                >
-                  <i class="far fa-trash-alt"></i>
-                </button>
+                <div class="w-100">
+                  <img class="img-fluid" :src="item.product.imageUrl" alt>
+                </div>
               </td>
               <td>
                 {{item.product.title}}
@@ -36,6 +65,15 @@
               </td>
               <td>{{item.qty}}/{{item.product.unit}}</td>
               <td class="text-right">{{item.total}}元</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm"
+                  @click="removeCartItem(item.id)"
+                >
+                  <i class="far fa-trash-alt"></i>
+                </button>
+              </td>
             </tr>
           </tbody>
           <tfoot>
@@ -58,8 +96,8 @@
               </td>
             </tr>
           </tfoot>
-        </table>
-        <div class="row justify-content-between">
+        </table>-->
+        <!-- <div class="row justify-content-between">
           <div class="col-md-6">
             <div class="input-group mb-5 input-group-sm">
               <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
@@ -72,6 +110,49 @@
             <router-link class="btn btn-danger mx-3" to="/finishorder/address">填寫寄送資訊</router-link>
             <router-link class="btn btn-success mx-3" to="/frontProducts">繼續逛逛</router-link>
           </div>
+        </div>-->
+      </div>
+      <div class="col-lg-4">
+        <div class="card text-center">
+          <div class="card-body" style="background-color: rgb(243, 190, 43);">
+            <h1 class="h3 border-b mb-1 pb-1">訂單總額</h1>
+            <div class="row justify-content-between">
+              <div class="col-4">合計</div>
+              <div class="col-6">
+                <del>{{carts.total}}元</del>
+              </div>
+            </div>
+            <div class="row justify-content-between mt-4 text-danger">
+              <div class="col-6 text-left">
+                <strong class="h3">優惠價</strong>
+              </div>
+              <div class="col-6">
+                <strong class="h3">{{carts.total}}元</strong>
+              </div>
+            </div>
+            <div class="input-group mb-3 mt-2 input-group-sm">
+              <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
+              <div class="input-group-append">
+                <button class="btn btn-info" @click="addCouponCode">套用優惠碼</button>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin:0;">
+            <div class="col-6" style="padding:0;">
+              <router-link
+                class="btn btn-danger w-100 h-100"
+                style="border-radius:0;"
+                to="/finishorder/address"
+              >填寫寄送資訊</router-link>
+            </div>
+            <div class="col-6" style="padding:0;">
+              <router-link
+                class="btn btn-success w-100 h-100"
+                style="border-radius:0;"
+                to="/frontProducts"
+              >繼續逛逛</router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -83,99 +164,6 @@
         </div>
       </div>
     </div>
-    <!--  -->
-    <!-- <div
-      class="py-5 row justify-content-center"
-      v-if="carts.total!==0"
-      style="background:rgb(180,180,180);"
-    >
-      <form class="col-md-6" @submit.prevent="createOrder">
-        <div class="form-group">
-          <label for="useremail">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            :class="{'is-invalid':errors.has('email')}"
-            name="email"
-            id="useremail"
-            v-validate="'required|email'"
-            v-model="form.user.email"
-            placeholder="請輸入 Email"
-            required
-          >
-          <span class="text-danger" v-if="errors.has('email')">{{errors.first('email')}}</span>
-        </div>
-
-        <div class="form-group">
-          <label for="username">收件人姓名</label>
-          <input
-            type="text"
-            class="form-control"
-            name="name"
-            id="username"
-            :class="{'is-invalid':errors.has('name')}"
-            v-model="form.user.name"
-            v-validate="'required'"
-            placeholder="輸入姓名"
-          >
-          <span class="text-danger" v-if="errors.has('name')">姓名必須輸入</span>
-        </div>
-
-        <div class="form-group">
-          <label for="usertel">收件人電話</label>
-          <input
-            type="tel"
-            name="tel"
-            class="form-control"
-            :class="{'is-invalid':errors.has('tel')}"
-            id="usertel"
-            v-model="form.user.tel"
-            v-validate="'required'"
-            placeholder="請輸入電話"
-          >
-          <span class="text-danger" v-if="errors.has('tel')">電話必須輸入</span>
-        </div>
-
-        <div class="form-group">
-          <label for="useraddress">收件人地址</label>
-          <input
-            type="address"
-            class="form-control"
-            name="address"
-            :class="{'is-invalid':errors.has('address')}"
-            id="useraddress"
-            v-model="form.user.address"
-            v-validate="'required'"
-            placeholder="請輸入地址"
-          >
-          <span class="text-danger" v-if="errors.has('address')">地址欄位不得留空</span>
-        </div>
-
-        <div class="form-group">
-          <label for="userpayment_method">付款方式</label>
-          <input
-            type="address"
-            class="form-control"
-            name="payment_method"
-            :class="{'is-invalid':errors.has('payment_method')}"
-            id="userpayment_method"
-            v-model="form.user.payment_method"
-            v-validate="'required'"
-            placeholder="請輸入付款方式"
-          >
-          <span class="text-danger" v-if="errors.has('payment_method')">付款方式不得留空</span>
-        </div>
-
-        <div class="form-group">
-          <label for="useraddress">留言</label>
-          <textarea name id class="form-control" cols="30" rows="10" v-model="form.message"></textarea>
-        </div>
-        <div class="text-right">
-          <button class="btn btn-danger">送出訂單</button>
-        </div>
-      </form>
-    </div>-->
-    <!--  -->
   </div>
 </template>
 
@@ -228,3 +216,9 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.border-b {
+  border-bottom: solid 1px rgb(120, 120, 120);
+}
+</style>
+

@@ -19,10 +19,6 @@
               src="../../assets/home_bg/14536971751_77833884e5_k.jpg"
               alt="First slide"
             >
-            <div class="carousel-caption d-md-block">
-              <h3 class="font-weigh-bold">心動不如馬上行動</h3>
-              <p class="h3 my-auto">優惠代碼:tokyo</p>
-            </div>
           </div>
           <div class="carousel-item">
             <img
@@ -30,10 +26,6 @@
               src="../../assets/home_bg/30691690338_a2e5ab4d31_k.jpg"
               alt="Second slide"
             >
-            <div class="carousel-caption d-md-block">
-              <h3 class="font-weigh-bold">你還在這邊幹嘛</h3>
-              <p class="h3 my-auto">優惠代碼:osaka</p>
-            </div>
           </div>
           <div class="carousel-item">
             <img
@@ -41,10 +33,6 @@
               src="../../assets/home_bg/31781713132_96cfc765f3_k.jpg"
               alt="Third slide"
             >
-            <div class="carousel-caption d-md-block">
-              <h3 class="font-weigh-bold">機會不等人</h3>
-              <p class="h3 my-auto">優惠代碼:japan</p>
-            </div>
           </div>
         </div>
         <a
@@ -88,9 +76,20 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+// gutter
+$gutter: 15px;
+
 .homepage-carousel-pic {
   width: 2048px;
+}
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+.carousel {
+  padding-left: 0;
+  padding-right: 0;
 }
 .carousel-caption {
   bottom: 50%;

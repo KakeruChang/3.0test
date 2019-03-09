@@ -13,7 +13,7 @@
       <div class="px-3 py-4" v-if="carts.total!==0">
         <h6>已選擇商品</h6>
         <div class="row justify-content-center">
-          <div class="col-md-12 shoppingcart-left-menu">
+          <div class="col-md-12 shoppingcart-left-menu shoppingcart-menu">
             <table class="table my-5">
               <thead>
                 <tr>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-// import { mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Shoppingcart',
@@ -81,6 +81,7 @@ export default {
     removeCartItem(id) {
       this.$store.dispatch('cartModules/removeCartItem', id);
     },
+    ...mapActions('cartModules', ['getCart']),
   },
   computed: {
     isLoading() {
@@ -91,7 +92,7 @@ export default {
     },
   },
   created() {
-    // this.getCart();
+    this.getCart();
     // const vm = this;
     // // 自定義名稱 'cartinfo'
     // // message: 傳入參數

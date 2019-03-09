@@ -20,8 +20,7 @@
 
 .productmenu-item {
     text-align: center;
-    font-size: 30px;
-    box-shadow: 0px 3px 5px rgba(20%, 20%, 40%, 0.6);
+    font-size: 30px; //box-shadow: 0px 3px 5px rgba(20%, 20%, 40%, 0.6);
     color: #fff;
 }
 
@@ -43,43 +42,95 @@
 
 .nav-link.active.nav-link-frontproducts {
     background-color: rgba(0, 0, 0, 0);
-    text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff;
+    text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 20px #000;
 }
 
 .nav-pills .nav-link {
     border-radius: 0;
+    text-shadow: 0px 0px 20px #000;
 }
 
-.shoppingcart-left-menu {
-    overflow-y: scroll;
-    height: 500px;
+@media (min-width:768px) {
+    .nav-pills-frontproducts {
+        padding-top: 50px;
+    }
 }
 
+// .shoppingcart-left-menu {
+//     // overflow-y: scroll;
+//     //height: 500px;
+// }
 // .dropdown-menu-right {
 //     right: 0;
 //     left: auto;
 // }
-@media (min-width: 541px) {
-    .wrap-FrontProducts {
-        background-image: url("./assets/home_bg/product_.jpg");
-        height: 1152px;
-    }
-    .cardrealved {
-        overflow-y: scroll;
+.wrap-FrontProducts {
+    background-image: url("./assets/home_bg/product_.jpg");
+    background-size: cover; //
+    background-position: center center; //
+    background-attachment: fixed; //
+    //height: 1152px;
+}
+
+// @media (min-width: 541px) {
+//     .cardrealved {
+//         overflow-y: scroll;
+//     }// .wrap-FrontProducts {
+//     background-image: url("./assets/home_bg/product_.jpg");
+//     height: 1152px;
+// }
+//}
+@media (max-width:540px) {
+    .nav-pills-frontproducts {
+        background: rgba(180, 180, 180, 0);
     }
 }
 
-@media (max-width:540px) {
-    .nav-pills-frontproducts {
-        background: rgb(180, 180, 180);
-    }
+.card-pic {
+    transition: all 1s;
+}
+
+.card-pic:hover {
+    transform: scale(1.5);
+}
+
+.card-pic-wrap {
+    overflow: hidden;
+}
+
+.btn-addToCart {
+    background-color: #ffe180;
+    border: none;
+}
+
+.btn-addToCart:hover {
+    background-color: rgb(243, 190, 43);
+}
+
+.btn-addToCart:focus {
+    box-shadow: none;
 }
 
 /*
- * Shoppingvart
+ * Shoppingcart
  */
 
 .shoppingcart-menu {
     overflow-y: scroll;
     height: 500px;
+}
+
+/*
+ * about
+ */
+
+.wrap-about {
+    background-image: url("./assets/home_bg/about_lg.jpg");
+    background-size: cover; //
+    background-position: center center; //
+    background-attachment: fixed; //
+    // height: 1152px; //tmp
+    overflow: hidden;
+    width: 100%;
+    padding-bottom: 200px;
 }

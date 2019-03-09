@@ -26,6 +26,11 @@ export default new Router({
           component: () => import('./views/front/FrontProducts.vue'),
         },
         {
+          path: '/frontProducts/:productrId',
+          name: 'theProduct',
+          component: () => import('./views/front/theProduct.vue'),
+        },
+        {
           path: 'about',
           name: 'About',
           component: () => import('./views/front/About.vue'),

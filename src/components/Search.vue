@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex px-3 wrapofSearch">
-    <div class="py-1">
+    <div class="py-1 findsomething">
       <input
         type="text"
         class="searchInput"
@@ -54,6 +54,19 @@ export default {
   background-color: #fff;
   border-radius: 24px;
 }
+
+@media (max-width: 990px) {
+  .findsomething {
+    margin-right: auto;
+    max-width: 260px;
+  }
+  .wrapofSearch {
+    margin-bottom: 15px;
+    margin-right: 15px;
+    max-width: 260px;
+  }
+}
+
 a {
   color: #000;
 }

@@ -11,7 +11,9 @@
       </main>
     </div>
     <nav class="navbar footerNavbar fixed-bottom">
-      <span class="nav-item h4 text-light m-auto font-weight-bold">馬上開始你的日本之旅吧</span>
+      <span
+        class="nav-item m-auto text-light d-block"
+      >Copyright© 日ノ本 TRAVEL SERVICE CO., LTD. All Rights Reserved</span>
       <!-- <router-link
         class="btn btn-secondary text-light font-weight-bold h6 m-auto"
         to="/frontProducts"
@@ -36,6 +38,6 @@ main {
   height: 100%;
 }
 .footerNavbar {
-  background-color: rgba(150, 150, 150, 0.4) !important;
+  background-color: rgba(50, 50, 50, 0.3) !important;
 }
 </style>
