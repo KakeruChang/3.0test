@@ -216,7 +216,7 @@ export default {
           tel: '',
         },
         products: [
-        ]
+        ],
       },
       isLoading: false,
     };
@@ -227,12 +227,12 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
       const vm = this;
       vm.isLoading = true;
-      vm.$http.get(api).then(response => {
+      vm.$http.get(api).then((response) => {
         console.log('getOrderList()', response.data);
         vm.isLoading = false;
         vm.orderList = response.data.orders;
         vm.pagination = response.data.pagination;
-      })
+      });
     },
     Openmodal(item) {
       this.tempList = Object.assign({}, item);
@@ -241,7 +241,7 @@ export default {
     updateOrderList() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/order/${vm.tempList.id}`;
-      this.$http.put(api, { data: vm.tempList }).then(response => {
+      this.$http.put(api, { data: vm.tempList }).then((response) => {
         console.log(response.data);
         if (response.data.success) {
           $('#orderListModal').modal('hide');
@@ -252,11 +252,11 @@ export default {
           vm.getOrderList();
           console.log('修改失敗');
         }
-      })
+      });
     },
   },
   created() {
     this.getOrderList();
-  }
+  },
 };
 </script>

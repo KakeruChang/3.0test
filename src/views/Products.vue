@@ -270,7 +270,7 @@ export default {
       isLoading: false, // true時啟動loading效果
       status: {
         fileUploading: false,
-      }
+      },
     };
   },
   methods: {
@@ -279,12 +279,12 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
       const vm = this;
       vm.isLoading = true;
-      this.$http.get(api).then(response => {
+      this.$http.get(api).then((response) => {
         console.log(response.data);
         vm.isLoading = false;
         vm.products = response.data.products;
         vm.pagination = response.data.pagination;
-      })
+      });
     },
     Openmodal(isNew, item) {
       if (isNew) {
@@ -304,7 +304,7 @@ export default {
         api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
         httpMethod = 'put';
       }
-      this.$http[httpMethod](api, { data: vm.tempProduct }).then(response => {
+      this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
         console.log(response.data);
         if (response.data.success) {
           $('#productModal').modal('hide');
@@ -314,7 +314,7 @@ export default {
           vm.getProducts();
           console.log('新增失敗');
         }
-      })
+      });
     },
     Opendeletemodal(item) {
       this.tempProduct = Object.assign({}, item);// 將item寫入空物件來避免this.tempProduct=item會直接傳參考
@@ -323,7 +323,7 @@ export default {
     deleteProduct() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
-      this.$http.delete(api).then(response => {
+      this.$http.delete(api).then((response) => {
         if (response.data.success) {
           vm.getProducts();
           console.log('刪除成功');
@@ -332,7 +332,7 @@ export default {
           console.log('刪除失敗');
         }
         $('#delProductModal').modal('hide');
-      })
+      });
     },
     uploadFile() {
       console.log(this);
@@ -344,8 +344,8 @@ export default {
       vm.status.fileUploading = true;
       vm.$http.post(url, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       }).then((response) => {
         vm.status.fileUploading = false;
         if (response.data.success) {
@@ -359,11 +359,11 @@ export default {
           response.data.status = 'danger';
           this.$store.dispatch('messageModules/updateMessage', response.data);
         }
-      })
-    }
+      });
+    },
   },
   created() {
     this.getProducts();
-  }
-}
+  },
+};
 </script>

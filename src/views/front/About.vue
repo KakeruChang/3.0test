@@ -19,19 +19,19 @@
     <div class>
       <div class="sec-rotate benefit" id="three_persist">
         <div class="container row mx-auto sec-rotate-inside pt-1 text-light">
-          <div class="col-md-4 text-center animated">
+          <div class="col-md-4 text-center animated-about">
             <span class="d-block" style="background-color:rgba(0,0,0,0);">
               <i class="fas fa-fighter-jet fa-5x"></i>
             </span>
             <span>我們擁有業界最快的飛機，讓您享受音速的快感。</span>
           </div>
-          <div class="col-md-4 text-center animated">
+          <div class="col-md-4 text-center animated-about">
             <span class="d-block">
               <i class="fas fa-hotel fa-5x"></i>
             </span>
             <span>總是為您選擇最好的飯店，讓您就算出外也能感到家的溫暖。</span>
           </div>
-          <div class="col-md-4 text-center animated">
+          <div class="col-md-4 text-center animated-about">
             <span class="d-block">
               <i class="fas fa-suitcase-rolling fa-5x"></i>
             </span>
@@ -45,7 +45,7 @@
         style="background: url('https://subtlepatterns.com/patterns/restaurant_icons.png');"
       >
         <div class="container row mx-auto sec-rotate-inside pt-1">
-          <div class="col-md-6 contact-us animated-left">
+          <div class="col-md-6 contact-us animated-about-left">
             <span class="h2 text-center d-block mx-5">我們在哪裡</span>
             <ul>
               <li>公車：站牌「OOOO」站，可搭乘72、208、553、藍7、藍20(區)，下車步行約5分鐘。</li>
@@ -55,7 +55,7 @@
               <li>開車資訊《南下》：走國道一號，請走汐止五股高架段前往內湖區→堤頂大道→植福路→樂群三路(OO家樂福)</li>
             </ul>
           </div>
-          <div class="col-md-6 animated-right">
+          <div class="col-md-6 animated-about-right">
             <img src="../../assets/images/map.jpg" alt class="img-fluid">
           </div>
         </div>
@@ -67,23 +67,23 @@
 <script>
 import $ from 'jquery';
 // //////////////
-$(document).ready(function () {
-  $('.scrollTop').click(function (e) {
+$(document).ready(() => {
+  $('.scrollTop').click(function moveToScrollTopClass(e) {
     e.preventDefault();
     const target = $(this).attr('href');
     const targetPosition = $(target).offset().top;
     $('html, body').animate({ scrollTop: targetPosition }, 1000);
   });
-  $(window).scroll(function () {
+  $(window).scroll(() => {
     const scrollPosition = $(window).scrollTop();
     const windowHeight = $(window).height();
 
-    $('.scrollTop').each(function () {
+    $('.scrollTop').each(function addActiveToScrollTop() {
       const target = $(this).attr('href');
       const targetPosition = $(target).offset().top;
       const targetHeight = $(target).outerHeight();
-      if (scrollPosition >= targetPosition - 1
-        && (targetPosition + targetHeight) > scrollPosition) {
+      if (scrollPosition >= targetPosition - 250
+        && (targetPosition + targetHeight - 250) > scrollPosition) {
         $('.scrollTop').parent().removeClass('active');
         $(this).parent().addClass('active');
       } else {
@@ -91,28 +91,28 @@ $(document).ready(function () {
       }
     });
 
-    // animated
-    $('.animated').each(function () {
+    // animated-about
+    $('.animated-about').each(function addFadeInToAnimatedAbout() {
       const thisPosition = $(this).offset().top;
-      if ((windowHeight + scrollPosition) >= thisPosition) {
+      if ((windowHeight + scrollPosition - 200) >= thisPosition) {
         $(this).addClass('fadeIn');
       }
     });
-    $('.animated-left').each(function () {
+    $('.animated-about-left').each(function addFadeInToAnimatedAboutLeft() {
       const thisPosition = $(this).offset().top;
-      if ((windowHeight + scrollPosition) >= thisPosition) {
+      if ((windowHeight + scrollPosition - 200) >= thisPosition) {
         $(this).addClass('fadeIn-side');
       }
     });
-    $('.animated-right').each(function () {
+    $('.animated-about-right').each(function addFadeInToAnimatedAboutRight() {
       const thisPosition = $(this).offset().top;
-      if ((windowHeight + scrollPosition) >= thisPosition) {
+      if ((windowHeight + scrollPosition - 200) >= thisPosition) {
         $(this).addClass('fadeIn-side');
       }
     });
 
     // contact
-    $('#contact').css('background-position-x', scrollPosition / 2 + 'px');
+    // $('#contact').css('background-position-x', `${scrollPosition / 2}px`);
     // $('#three_persist').css('transform', 'translateY( ' + (scrollPosition / 2) + 'px )');
   });
 });
@@ -191,17 +191,17 @@ export default {
   text-decoration: none;
   // line-height: 35px;
 }
-.animated {
+.animated-about {
   opacity: 0;
   transition: all 2s;
   transform: translateY(50px);
 }
-.animated-left {
+.animated-about-left {
   opacity: 0;
   transition: all 2s;
   transform: translateX(-500px);
 }
-.animated-right {
+.animated-about-right {
   opacity: 0;
   transition: all 2s;
   transform: translateX(500px);

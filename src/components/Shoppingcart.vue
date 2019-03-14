@@ -3,12 +3,20 @@
     <loading :active.sync="isLoading"></loading>
     <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false">
       <i
-        class="fa fa-shopping-cart text-secondary fa-2x animated infinite flip slower"
+        class="fa fa-shopping-cart text-warning fa-2x animated infinite bounce slow"
         aria-hidden="true"
       ></i>
+      <!-- <i
+        class="fa fa-shopping-cart text-warning fa-2x animated infinite flip slower"
+        aria-hidden="true"
+      ></i>-->
       <span class="badge badge-pill badge-danger">{{carts.carts.length}}</span>
     </button>
-    <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px" data-offset="400">
+    <div
+      class="dropdown-menu dropdown-menu-right"
+      style="min-width: 350px;background: url('https://subtlepatterns.com/patterns/restaurant_icons.png');"
+      data-offset="400"
+    >
       <div class="m-3 alert alert-warning" role="alert" v-if="carts.total===0">您尚未選擇任何商品</div>
       <div class="px-3 py-4" v-if="carts.total!==0">
         <h6>已選擇商品</h6>

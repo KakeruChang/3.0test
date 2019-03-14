@@ -1,5 +1,5 @@
 <template>
-  <div class="my-5 row justify-content-center">
+  <div class="mt-5 row justify-content-center">
     <form class="col-md-6" @submit.prevent="payOrder">
       <p class="h6">訂單明細</p>
       <table class="table">
@@ -67,9 +67,9 @@ export default {
     return {
       orderId: '',
       order: {
-        user: {}
-      }
-    }
+        user: {},
+      },
+    };
   },
   methods: {
     getOrder() {
@@ -103,6 +103,6 @@ export default {
     this.getOrder();
     console.log('this.orderId:', this.orderId);
     this.updateActiveOfCheckout('checkout');
-  }
-}
+  },
+};
 </script>

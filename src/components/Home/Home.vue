@@ -11,9 +11,19 @@
       </main>
     </div>
     <nav class="navbar footerNavbar fixed-bottom">
-      <span
-        class="nav-item m-auto text-light d-block"
-      >Copyright© 日ノ本 TRAVEL SERVICE CO., LTD. All Rights Reserved</span>
+      <span class="nav-item m-auto text-light text-center">
+        Copyright© 日ノ本 TRAVEL SERVICE CO., LTD. All Rights Reserved
+        <a
+          class="btn btn-navbottom"
+          href="javascript:void(0)"
+          @click.prevent
+        >
+          <i class="fab fa-facebook text-light"></i>
+        </a>
+        <a class="btn btn-navbottom" href="javascript:void(0)" @click.prevent>
+          <i class="fab fa-twitter text-light"></i>
+        </a>
+      </span>
       <!-- <router-link
         class="btn btn-secondary text-light font-weight-bold h6 m-auto"
         to="/frontProducts"
@@ -39,5 +49,10 @@ main {
 }
 .footerNavbar {
   background-color: rgba(50, 50, 50, 0.3) !important;
+}
+@media (max-width: 990px) {
+  .btn-navbottom {
+    display: inline !important;
+  }
 }
 </style>

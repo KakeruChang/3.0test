@@ -63,7 +63,10 @@
           <!--  -->
           <div class="row my-3">
             <div class="col-md-8">
-              <div class="card text-center">
+              <div
+                class="card text-center"
+                style="background: url('https://subtlepatterns.com/patterns/restaurant_icons.png');"
+              >
                 <div class="card-body">
                   <img :src="product.imageUrl" class="img-fluid" alt>
                   <h3
@@ -79,7 +82,10 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="card text-center">
+              <div
+                class="card text-center"
+                style="background: url('https://subtlepatterns.com/patterns/restaurant_icons.png');"
+              >
                 <div class="card-body">
                   <h6
                     class="modal-title text-left mb-2 pb-2"
@@ -122,7 +128,6 @@
 
 <script>
 import $ from 'jquery';
-import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -144,13 +149,11 @@ export default {
       });
     },
     moveGift() {
-      const clickX = event.clientX;
-      const clickY = event.clientY;
       $('.flyGift').css({
         display: 'inline',
       });
       $('.flyGift').css({
-        left: `${clickX}px`, top: `${clickY}px`, 'z-index': '999',
+        left: `${window.event.clientX}px`, top: `${window.event.clientY}px`, 'z-index': '999',
       });
       setTimeout(() => {
         $('.flyGift').css({
@@ -177,7 +180,7 @@ export default {
     },
     gotoProducts(filter) {
       this.$store.dispatch('productsModules/updateProductFilter', filter);
-      this.$router.push(`/frontProducts`);
+      this.$router.push('/frontProducts');
     },
   },
   computed: {

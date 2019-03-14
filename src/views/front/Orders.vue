@@ -5,29 +5,40 @@
     <!--訂單-->
     <div class="row justify-content-center" v-if="carts.total!==0">
       <div class="col-lg-8 row">
-        <div class="row col-md-12 border-b my-2 py-2" v-for="item in carts.carts" :key="item.id">
+        <div
+          class="row col-md-12 border-b my-2 py-2 orders-order"
+          v-for="item in carts.carts"
+          :key="item.id"
+        >
           <div
-            class="col-md-4"
+            class="col-lg-3 orders-order-pic"
             :style="{ 'background-image': `url(${item.product.imageUrl})` }"
             style=" background-size: cover; background-position: center"
           >
             <!-- <img class="img-fluid" :src="item.product.imageUrl" alt> -->
           </div>
-          <div class="col-md-1 col-1">
+          <div class="col-lg-1 col-sm-1 col-xxs-d-none">
             <span class="badge badge-secondary">{{item.product.category}}</span>
           </div>
-          <div class="col-md-3 col-4">
+          <div class="col-lg-3 col-sm-4 col-4">
             {{item.product.title}}
-            <div class="text-success" v-if="item.coupon">已套用優惠券
-              <p>
-                {{item.coupon.title}}:折扣
-                <span class="text-danger">{{item.coupon.percent}}</span>%
-              </p>
+            <div class="text-success" v-if="item.coupon">
+              <span class="d-xxs-none">{{item.coupon.title}}:</span>
+              <span>折扣</span>
+              <span class="text-danger">{{item.coupon.percent}}</span>%
             </div>
           </div>
-          <div class="col-md-1 col-2">{{item.qty}}/{{item.product.unit}}</div>
-          <div class="col-md-2 col-3">{{item.total}}元</div>
-          <div class="col-md-1 col-2">
+          <div class="col-lg-2 col-sm-2 col-2">{{item.qty}}/{{item.product.unit}}</div>
+          <div class="col-lg-2 col-sm-3 col-4">
+            <span v-if="item.final_total===item.total">{{item.total}}</span>
+            <del class="font-weight-light" v-if="item.final_total!==item.total">{{item.total}}</del>
+            <strong
+              class="font-weight-bold text-danger"
+              v-if="item.final_total!==item.total"
+            >{{item.final_total}}</strong>
+            元
+          </div>
+          <div class="col-lg-1 col-sm-2 col-2">
             <button
               type="button"
               class="btn btn-outline-danger btn-sm"
@@ -127,7 +138,7 @@
                 <strong class="h3">優惠價</strong>
               </div>
               <div class="col-6">
-                <strong class="h3">{{carts.total}}元</strong>
+                <strong class="h3">{{carts.final_total}}元</strong>
               </div>
             </div>
             <div class="input-group mb-3 mt-2 input-group-sm">
@@ -192,8 +203,7 @@ export default {
         code: vm.coupon_code,
       };
       vm.$store.commit('LOADING', true);
-      this.$http.post(url, { data: coupon }).then((response) => {
-        console.log(response.data);
+      this.$http.post(url, { data: coupon }).then(() => {
         vm.getCart();
         vm.$store.commit('LOADING', false);
       });
@@ -220,5 +230,22 @@ export default {
 .border-b {
   border-bottom: solid 1px rgb(120, 120, 120);
 }
+.orders-order {
+  height: 80px;
+}
+@media (max-width: 990px) {
+  .orders-order-pic {
+    display: none;
+  }
+}
+@media (max-width: 408px) {
+  .d-xxs-none {
+    display: none;
+  }
+}
+@media (max-width: 576px) {
+  .col-xxs-d-none {
+    display: none;
+  }
+}
 </style>
-

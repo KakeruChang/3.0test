@@ -33,12 +33,12 @@ export default {
   methods: {
     gotoSearch() {
       this.$store.dispatch('productsModules/updateSearchFilter', this.searchFilter);
-      this.$router.push(`/frontProducts`);
+      this.$router.push('/frontProducts');
       this.$store.dispatch('productsModules/getProducts');
     },
     cleanSearch() {
       this.searchFilter = '';
-    }
+    },
   },
 };
 </script>
@@ -71,4 +71,3 @@ a {
   color: #000;
 }
 </style>
-

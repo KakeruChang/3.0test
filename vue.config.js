@@ -4,4 +4,5 @@ module.exports = {
             extensions: ['*', '.js', '.vue', '.json'],
         },
     },
+    baseUrl: './',
 };

@@ -5,8 +5,8 @@
 .flyGift {
     color: rgb(5, 81, 167);
     z-index: 50;
-    top: -3%;
-    left: -3%;
+    top: -50px;
+    left: -50px;
     display: none;
     transition: all 1s cubic-bezier(1, 0.08, 0, 1.19);
     position: fixed;
@@ -69,7 +69,7 @@
     background-size: cover; //
     background-position: center center; //
     background-attachment: fixed; //
-    //height: 1152px;
+    padding-bottom: 150px;
 }
 
 // @media (min-width: 541px) {
@@ -84,18 +84,6 @@
     .nav-pills-frontproducts {
         background: rgba(180, 180, 180, 0);
     }
-}
-
-.card-pic {
-    transition: all 1s;
-}
-
-.card-pic:hover {
-    transform: scale(1.5);
-}
-
-.card-pic-wrap {
-    overflow: hidden;
 }
 
 .btn-addToCart {

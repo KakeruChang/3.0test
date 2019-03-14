@@ -13,6 +13,10 @@ export default {
             context.commit('LOADING', true, { root: true });
             // vm.$store.dispatch('updateLoading', true);
             axios.get(url).then((response) => {
+                response.data.data.final_total = Math.floor(response.data.data.final_total);
+                response.data.data.carts.forEach((item) => {
+                    item.final_total = Math.floor(item.final_total);
+                });
                 context.commit('CARTS', response.data.data);
                 context.commit('LOADING', false, { root: true });
             });

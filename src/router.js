@@ -40,7 +40,7 @@ export default new Router({
     {
       path: '/finishorder',
       name: 'Finishorder',
-      component: () => import('./components/Home/CheckoutTitle.vue'),
+      component: () => import('./components/Home/Finishorder.vue'),
       redirect: '/finishorder/orders',
       children: [
         {
@@ -74,19 +74,19 @@ export default new Router({
           path: 'products',
           name: 'Products',
           component: () => import('./views/Products.vue'),
-          meta: { requiresAuth: true },
+          // meta: { requiresAuth: true },
         },
         {
           path: 'coupons',
           name: 'Coupons',
           component: () => import('./views/Coupons.vue'),
-          meta: { requiresAuth: true },
+          // meta: { requiresAuth: true },
         },
         {
           path: 'orderlist',
           name: 'OrderList',
           component: () => import('./views/OrderList.vue'),
-          meta: { requiresAuth: true },
+          // meta: { requiresAuth: true },
         },
         {
           path: 'customer_order',

@@ -66,7 +66,7 @@
         </div>
       </div>
       <div class="row col-md-9 col-lg-10" style="padding-bottom:100px;height:100%;">
-        <div class="flyGift">
+        <div class="flyGift text-success">
           <i class="fas fa-gift fa-2x"></i>
         </div>
         <div class="col-md-12">
@@ -79,6 +79,60 @@
             v-for="item in productsRevealed"
             :key="item.id"
           >
+            <!-- 改造中 -->
+            <div
+              class="border-0"
+              style=" background-size: cover; background-position: center"
+              :style="{backgroundImage:`url(${item.imageUrl})`}"
+            >
+              <div class="h-100 w-100 product-inner hover">
+                <button
+                  type="button"
+                  class="btn h-100 w-100"
+                  @click.prevent="gettheProduct(item.id)"
+                >
+                  <div class="card-body">
+                    <span class="badge badge-secondary float-right ml-2">{{item.category}}</span>
+                    <h5 class="text-left">
+                      <strong>
+                        <a
+                          href="#"
+                          class="text-light"
+                          @click.prevent="gotoTheProduct(item.id)"
+                        >{{item.title}}</a>
+                      </strong>
+                    </h5>
+                    <div class="frontproduct-text text-light">
+                      <p class="card-text">{{item.content}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <div class="h5" v-if="!item.price">{{item.origin_price}} 元</div>
+                      <div class="h5 text-warning ml-auto" v-if="item.price">售價:{{item.price}}元</div>
+                    </div>
+                  </div>
+                </button>
+                <div class="card-footer d-flex">
+                  <button
+                    type="button"
+                    class="btn btn-outline-success btn-sm"
+                    @click="gotoTheProduct(item.id)"
+                  >
+                    <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
+                    查看更多
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-warning btn-sm ml-auto"
+                    @click="addtoCart(item.id);"
+                  >
+                    <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
+                    加到購物車
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- 改造中 -->
+            <!-- back up
             <div class="card border-0 shadow-sm">
               <div class="card-pic-wrap w-100 h-100">
                 <div
@@ -109,7 +163,6 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-baseline">
                   <div class="h5" v-if="!item.price">{{item.origin_price}} 元</div>
-                  <!-- <del class="h6" v-if="item.price">原價{{item.origin_price}}元</del> -->
                   <div class="h5 text-danger ml-auto" v-if="item.price">售價:{{item.price}}元</div>
                 </div>
               </div>
@@ -122,24 +175,6 @@
                   <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
                   查看更多
                 </button>
-                <!-- <button
-                  type="button"
-                  class="btn btn-outline-secondary btn-sm"
-                  @click="gettheProduct(item.id)"
-                >
-                  <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
-                  查看更多
-                </button>-->
-                <!--  -->
-                <!-- <button
-                  type="button"
-                  class="btn btn-outline-secondary btn-sm"
-                  @click="gotoTheProduct(item.id)"
-                >
-                  <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
-                  試驗中
-                </button>-->
-                <!--  -->
                 <button
                   type="button"
                   class="btn btn-outline-danger btn-sm ml-auto"
@@ -150,6 +185,7 @@
                 </button>
               </div>
             </div>
+            -->
           </div>
         </div>
       </div>
@@ -330,24 +366,30 @@ export default {
       });
     },
     moveGift() {
-      const clickX = event.clientX;
-      const clickY = event.clientY;
-      console.log(event);
+      // const clickX = window.event.clientX;
+      // const clickY = window.event.clientY;
       $('.flyGift').css({
         display: 'inline',
       });
       $('.flyGift').css({
-        left: `${clickX}px`, top: `${clickY}px`, 'z-index': '999',
+        left: `${window.event.clientX}px`, top: `${window.event.clientY}px`, 'z-index': '999',
       });
       setTimeout(() => {
-        $('.flyGift').css({
-          left: '91%', top: '3%',
-        });
+        console.log('moveGiftofwindow:', window.innerWidth);
+        if (window.innerWidth > 990) {
+          $('.flyGift').css({
+            left: `${window.innerWidth - 160}px`, top: '25px',
+          });
+        } else {
+          $('.flyGift').css({
+            left: `${window.innerWidth - 80}px`, top: '25px',
+          });
+        }
       }, 50);
     },
     returnGift() {
       $('.flyGift').css({
-        'z-index': '-1', left: '-3%', top: '-3%', display: 'none',
+        'z-index': '-1', left: '-50px', top: '-50px', display: 'none',
       });
     },
     addtoCart(id, qty = 1) {
@@ -417,7 +459,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style  lang="scss" scoped>
 a:hover {
   text-decoration: none;
 }
@@ -431,5 +473,35 @@ a:hover {
 .wrapofSearch {
   background-color: #fff;
   border-radius: 24px;
+}
+.product-inner {
+  opacity: 0;
+  transition: all 1s;
+  transform: translateY(50px);
+  h5 {
+    transition: all 2s;
+    transform: translateX(-50px);
+  }
+}
+@media (min-width: 991px) {
+  .product-inner:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateY(0);
+    h5 {
+      transform: translateX(0);
+    }
+  }
+}
+
+@media (max-width: 990px) {
+  .product-inner.hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateY(0);
+    h5 {
+      transform: translateX(0);
+    }
+  }
 }
 </style>
