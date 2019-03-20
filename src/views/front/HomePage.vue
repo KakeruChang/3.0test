@@ -3,7 +3,8 @@
     <div class="homepage-slogan text-center">
       <h1 class="text-light">前往亞洲最美文化國度:日本</h1>
       <p class="text-light font-weight-bold h3 pt-4 pb-2">不論是自然美景，或是文化藝術，絕對會讓您留連忘返。</p>
-      <a class="px-5 py-2 btn btn-light homepageToProduct" href="/#/frontProducts">馬上出發</a>
+      <a class="px-5 py-2 btn btn-light homepageToProduct" href="#/frontProducts">馬上出發</a>
+      <!-- <a class="px-5 py-2 btn btn-light homepageToProduct" href="#/frontProducts">馬上出發</a> -->
     </div>
     <div id="carouselExampleControls" class="carousel slide h-100" data-ride="carousel">
       <div class="carousel-inner h-100">

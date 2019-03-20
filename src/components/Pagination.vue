@@ -43,7 +43,7 @@ export default {
   props: {
     pageData: {
       type: Object,
-      default: function () { return {}; },
+      default() { return {}; },
     },
   },
   methods: {

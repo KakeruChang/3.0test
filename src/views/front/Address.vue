@@ -83,7 +83,7 @@
           <textarea name id class="form-control" cols="30" rows="10" v-model="form.message"></textarea>
         </div>
         <div class="text-right">
-          <button class="btn btn-danger">送出訂單</button>
+          <button class="btn btn-primary">送出訂單</button>
         </div>
       </form>
     </div>
@@ -91,13 +91,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import Alert from '../../components/AlertMessage.vue';
+// import { mapActions } from 'vuex';
+// import Alert from '../../components/AlertMessage.vue';
 
 export default {
-  components: {
-    Alert,
-  },
+  // components: {
+  //   Alert,
+  // },
   data() {
     return {
       form: {

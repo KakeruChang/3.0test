@@ -5,7 +5,7 @@
       <router-link class="text-light" to="/homePage">
         <i
           class="fas fa-home fa-2x mr-3"
-          :class="{ 'home-navbar-item-active': isActiveofHomeNavebar==='homepage' }"
+          :class="{ 'home-navbar-item-home-active': isActiveofHomeNavebar==='homepage' }"
         ></i>
       </router-link>
       <div class="search-md">
@@ -25,21 +25,19 @@
       <!-- <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light" style="height:8%"> -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item ml-3 mt-1">
-            <router-link
-              class="h5 home-navbar-item"
-              :class="{ 'home-navbar-item-active': isActiveofHomeNavebar==='product' }"
-              to="/frontProducts"
-            >本店商品</router-link>
+          <li
+            class="nav-item nav-item-homenav px-3 pt-3 pb-2"
+            :class="{ 'home-navbar-item-active': isActiveofHomeNavebar==='product' }"
+          >
+            <router-link class="h5 home-navbar-item" to="/frontProducts">本店商品</router-link>
           </li>
-          <li class="nav-item mx-3 mt-1">
-            <router-link
-              class="h5 home-navbar-item"
-              :class="{ 'home-navbar-item-active': isActiveofHomeNavebar==='about' }"
-              to="/about"
-            >關於我們</router-link>
+          <li
+            class="nav-item nav-item-homenav px-3 pt-3 pb-2"
+            :class="{ 'home-navbar-item-active': isActiveofHomeNavebar==='about' }"
+          >
+            <router-link class="h5 home-navbar-item" to="/about">關於我們</router-link>
           </li>
-          <li class="search-sm">
+          <li class="search-sm px-3">
             <Search/>
           </li>
         </ul>
@@ -86,6 +84,7 @@ export default {
 }
 .search-sm {
   display: inline;
+  padding: 12px 0 8px 0;
 }
 @media (max-width: 990px) {
   .search-sm {

@@ -114,7 +114,7 @@
                 <div class="card-footer d-flex">
                   <button
                     type="button"
-                    class="btn btn-outline-success btn-sm"
+                    class="btn btn-outline-light btn-sm"
                     @click="gotoTheProduct(item.id)"
                   >
                     <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>

@@ -2,19 +2,28 @@
  * HomeNavbar
  */
 
-.home-navbar-item:hover,
 .home-navbar-item-active {
     color: rgb(255, 255, 255);
-    text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff;
+    background-color: rgba(243, 190, 43, 0.7);
+}
+
+.home-navbar-item-home-active {
+    color: rgb(243, 190, 43);
 }
 
 .home-navbar-item {
     text-decoration: none !important;
     color: rgb(255, 255, 255);
+    &:hover {
+        color: rgb(255, 255, 255) !important;
+        text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff;
+    }
 }
 
 .homenavbar {
     background: rgba(50, 50, 50, 0.3) !important;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 @media (max-width: 990px) {

@@ -144,7 +144,7 @@
             <div class="input-group mb-3 mt-2 input-group-sm">
               <input type="text" class="form-control" v-model="coupon_code" placeholder="請輸入優惠碼">
               <div class="input-group-append">
-                <button class="btn btn-info" @click="addCouponCode">套用優惠碼</button>
+                <button class="btn btn-success" @click="addCouponCode">套用優惠碼</button>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false">
       <i
-        class="fa fa-shopping-cart text-warning fa-2x animated infinite bounce slow"
+        class="fa fa-shopping-cart text-primary fa-2x animated infinite bounce slow"
         aria-hidden="true"
       ></i>
       <!-- <i
@@ -63,7 +63,7 @@
           </div>
         </div>
         <router-link
-          class="btn btn-success btn-block"
+          class="btn btn-primary btn-block"
           to="/finishorder/orders"
           v-if="carts.carts.length!==0"
         >

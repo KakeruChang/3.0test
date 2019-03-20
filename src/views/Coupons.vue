@@ -168,12 +168,12 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
       const vm = this;
       vm.isLoading = true;
-      this.$http.get(api).then(response => {
+      this.$http.get(api).then((response) => {
         console.log('getCoupons()', response.data);
         vm.isLoading = false;
         vm.coupons = response.data.coupons;
         vm.pagination = response.data.pagination;
-      })
+      });
     },
     Openmodal(isNew, item) {
       if (isNew) {
@@ -193,7 +193,7 @@ export default {
         api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
         httpMethod = 'put';
       }
-      this.$http[httpMethod](api, { data: vm.tempCoupon }).then(response => {
+      this.$http[httpMethod](api, { data: vm.tempCoupon }).then((response) => {
         console.log(response.data);
         if (response.data.success) {
           $('#couponModal').modal('hide');
@@ -203,7 +203,7 @@ export default {
           vm.getCoupons();
           console.log('新增失敗');
         }
-      })
+      });
     },
     Opendeletemodal(item) {
       this.tempCoupon = Object.assign({}, item);// 將item寫入空物件來避免this.tempCoupon=item會直接傳參考
@@ -212,7 +212,7 @@ export default {
     deleteCoupon() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
-      this.$http.delete(api).then(response => {
+      this.$http.delete(api).then((response) => {
         if (response.data.success) {
           vm.getCoupons();
           console.log('刪除成功');
@@ -221,11 +221,11 @@ export default {
           console.log('刪除失敗');
         }
         $('#delCouponModal').modal('hide');
-      })
+      });
     },
   },
   created() {
     this.getCoupons();
-  }
-}
+  },
+};
 </script>

@@ -112,7 +112,7 @@ $(document).ready(() => {
     });
 
     // contact
-    // $('#contact').css('background-position-x', `${scrollPosition / 2}px`);
+    $('#contact').css('background-position-x', `${scrollPosition / 2}px`);
     // $('#three_persist').css('transform', 'translateY( ' + (scrollPosition / 2) + 'px )');
   });
 });
@@ -183,7 +183,7 @@ export default {
       padding: 15px;
     }
     .active {
-      background-color: rgba(241, 166, 2, 0.6) !important;
+      background-color: rgba(243, 190, 43, 0.7) !important;
     }
   }
 }

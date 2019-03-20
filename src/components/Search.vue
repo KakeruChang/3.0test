@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex px-3 wrapofSearch">
-    <div class="py-1 findsomething">
+    <div class="pt-1 findsomething">
       <input
         type="text"
         class="searchInput"
@@ -10,7 +10,7 @@
         v-model="searchFilter"
       >
     </div>
-    <div class="pl-1 my-auto">
+    <div class="pl-1 my-auto" v-if="searchFilter !== ''">
       <a href="javascript:void(0)" @click.prevent="cleanSearch()">
         <i class="fas fa-times"></i>
       </a>

@@ -64,9 +64,9 @@ export default {
     return {
       orderId: '',
       order: {
-        user: {}
-      }
-    }
+        user: {},
+      },
+    };
   },
   methods: {
     getOrder() {
@@ -90,12 +90,12 @@ export default {
         }
         vm.isLoading = false;
       });
-    }
+    },
   },
   created() {
     this.orderId = this.$route.params.orderId;
     this.getOrder();
     console.log('this.orderId:', this.orderId);
-  }
-}
+  },
+};
 </script>

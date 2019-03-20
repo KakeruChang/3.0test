@@ -39,23 +39,23 @@ export default {
     return {
       user: {
         username: '',
-        password: ''
-      }
-    }
+        password: '',
+      },
+    };
   },
   methods: {
     signin() {
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       const vm = this;
-      this.$http.post(api, vm.user).then(response => {
+      this.$http.post(api, vm.user).then((response) => {
         console.log(response);
         if (response.data.success) {
           vm.$router.push('/admin/products');
         }
-      })
-    }
-  }
-}
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
