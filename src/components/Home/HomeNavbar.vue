@@ -41,10 +41,12 @@
             <Search/>
           </li>
         </ul>
+        <Member/>
         <Shoppingcart/>
         <router-link
           class="nav-link mx-2 btn btn-outline-primary navbar-dashboard"
           to="/admin/products"
+          v-if="userHomeNavbar===userAdministrator"
         >後台</router-link>
       </div>
     </nav>
@@ -53,15 +55,30 @@
 
 <script>
 import Shoppingcart from '../Shoppingcart.vue';
+import Member from '../Member';
 
 export default {
   components: {
     Shoppingcart,
+    Member,
+  },
+  data() {
+    return {
+      userAdministrator: process.env.VUE_APP_ADMINISTRATOR,
+    }
   },
   computed: {
     isActiveofHomeNavebar() {
       return this.$store.state.isActiveofHomeNavebar;
     },
+    userHomeNavbar() {
+      return this.$store.state.userWho;
+    },
+  },
+  created() {
+    console.log('userHomeNavbar()', this.userHomeNavbar);
+    console.log('process.env.VUE_APP_APIPATH', process.env.VUE_APP_APIPATH);
+    console.log('process.env.USER_ADMINISTRATOR', process.env.VUE_APP_ADMINISTRATOR);
   },
 };
 </script>

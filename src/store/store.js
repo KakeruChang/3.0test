@@ -13,6 +13,8 @@ export default new Vuex.Store({
     isLoading: false,
     isActiveofHomeNavebar: '',
     isActiveofCheckout: '',
+    // userWho: {},
+    userWho: '',
   },
   actions: {
     updateLoading(context, status) {
@@ -24,6 +26,9 @@ export default new Vuex.Store({
     updateCheckoutActive(context, status) {
       context.commit('CHECKOUTACTIVE', status);
     },
+    updateUser(context, status) {
+      context.commit('USERNOW', status);
+    },
   },
   mutations: {
     LOADING(state, status) {
@@ -34,6 +39,12 @@ export default new Vuex.Store({
     },
     CHECKOUTACTIVE(state, payload) {
       state.isActiveofCheckout = payload;
+    },
+    USERNOW(state, payload) {
+      console.log('USERNOW:', payload);
+      // Object.assign(state.userWho, payload);
+      // state.userWho = payload.uid;
+      state.userWho = payload;
     },
   },
   modules: {

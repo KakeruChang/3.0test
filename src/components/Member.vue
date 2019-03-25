@@ -1,0 +1,240 @@
+<template>
+  <div>
+    <div class="row" v-if="user.length===0">
+      <!-- <div class="row" v-if="user.length===0"> -->
+      <div class="dropdown ml-auto col-6">
+        <button class="btn btn-success btn-cart" data-toggle="dropdown" data-flip="false">註冊</button>
+        <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px;" data-offset="400">
+          <div class="px-3 py-4">
+            <div class="row justify-content-center">
+              <div class="col-md-12 shoppingcart-left-menu">
+                <form>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">電子郵件</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter email"
+                      v-model="signup.account"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">密碼</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Password"
+                      v-model="signup.password"
+                    >
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    @click.prevent="signupToFirebase()"
+                  >註冊</button>
+                </form>
+              </div>
+            </div>
+            <router-link class="mt-3 btn btn-primary btn-block" to="/">登入</router-link>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <div class="dropdown ml-auto col-6">
+        <button class="btn btn-success btn-cart" data-toggle="dropdown" data-flip="false">登入</button>
+        <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px;" data-offset="400">
+          <div class="px-3 py-4">
+            <div class="row justify-content-center">
+              <div class="col-md-12 shoppingcart-left-menu">
+                <form>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">電子郵件</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail11"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter email"
+                      v-model="login.account"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">密碼</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword11"
+                      placeholder="Password"
+                      v-model="login.password"
+                    >
+                  </div>
+                  <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck11">
+                    <label class="form-check-label" for="exampleCheck11">Check me out</label>
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    @click.prevent="loginToFirebase()"
+                  >登入</button>
+                </form>
+              </div>
+            </div>
+            <span>或是用其他方式登入</span>
+            <button class="btn btn-primary" @click.prevent="loginwithOuter('google')">
+              <i class="fab fa-google"></i>
+            </button>
+            <button class="btn btn-success" @click.prevent="loginwithOuter('facebook')">
+              <i class="fab fa-facebook"></i>
+            </button>
+            <!--  -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 已登入 -->
+    <div class="dropdown ml-auto" v-if="user.length!==0">
+      <button class="btn btn-primary" data-toggle="dropdown" data-flip="false">
+        <i class="fas fa-user-check"></i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" style="min-width: 300px;" data-offset="400">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body row">
+            <div class="col-4">
+              <img :src="user.photoURL" style="max-width: 80px;" alt>
+            </div>
+            <div class="col-8">
+              <h5 class="card-title">name:{{user.displayName}}</h5>
+              <span class="card-text">email:{{user.email}}</span>
+              <br>
+              <span class="card-text">uid:{{user.uid}}</span>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <button class="btn btn-danger ml-auto px-3" @click="logOut()">登出</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 已登入 -->
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: "Member",
+  data() {
+    return {
+      user: '',
+      isAuth: false, //Is authorized flag
+      signup: {
+        account: '',
+        password: '',
+      },
+      login: {
+        account: '',
+        password: '',
+      },
+    };
+  },
+  methods: {
+    signupToFirebase() {
+      const vm = this;
+      const response = {
+        message: '',
+        status: '',
+      };
+      const email = vm.signup.account;
+      const password = vm.signup.password;
+      firebaseAuth.createUserWithEmailAndPassword(email, password)
+        .then(user => {
+          const signupUser = {
+            'email': email,
+            'password': password,
+            'uid': user.user.uid,
+          };
+          firebaseDb.ref(`/user/${user.user.uid}`).set(signupUser);
+          response.message = '註冊成功';
+          response.status = 'success';
+          vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
+        }).catch(function (error) {
+          const errorMessage = error.message;
+          response.message = errorMessage;
+          response.status = 'danger';
+          vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
+        });
+    },
+    loginToFirebase() {
+      const vm = this;
+      console.log('loginToFirebase():', vm.login.account, vm.login.password)
+      const email = vm.login.account;
+      const password = vm.login.password;
+      firebaseAuth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('登入成功');
+        }).catch(function (error) {
+          console.log('登入失敗');
+        });
+    },
+    loginwithOuter(outer) {
+      const response = {
+        message: '',
+        status: '',
+      };
+      const vm = this;
+      let provider = '';
+      switch (outer) {
+        case "google":
+          provider = new firebase.auth.GoogleAuthProvider();
+          break;
+        case "facebook":
+          provider = new firebase.auth.FacebookAuthProvider();
+          break;
+      }
+      firebaseAuth.signInWithPopup(provider)
+        .then(result => {
+          const signupUser = {
+            'email': result.user.email,
+            'type': outer,
+            'uid': result.user.uid,
+          };
+          firebaseDb.ref(`/user/${result.user.uid}`).set(signupUser);
+          this.user = result.user;
+          console.log('this.user:', this.user);
+          console.log('this.user.uid:', this.user.uid);
+          // vm.$store.dispatch('updateUser', result.user, { root: true });
+          this.$store.dispatch('updateUser', this.user.uid, { root: true });
+          response.message = '登入成功';
+          response.status = 'success';
+          vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
+        }).catch(err => console.error(err));
+    },
+
+    logOut() {
+      firebaseAuth.signOut()
+        .then(() => {
+          this.user = '';
+          this.$store.dispatch('updateUser', '', { root: true });
+          this.isAuth = false;
+        }).catch(err => { console.log('0.5'); console.log(error); });
+    },
+  },
+  beforeCreate() {
+    firebaseAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user;
+        this.$store.dispatch('updateUser', user.uid, { root: true });
+        this.isAuth = true;
+      }
+    })
+  },
+  created() {
+    console.log(firebaseDb);
+    console.log(firebaseAuth);
+  },
+};
+</script>

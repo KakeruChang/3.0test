@@ -7,6 +7,11 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import 'bootstrap';
 import VeeValidate from 'vee-validate';
 import zhTWValidate from 'vee-validate/dist/locale/zh_TW';
+import VueFire from 'vuefire'; //
+// import * as firebase from 'firebase' //Dev mode
+import firebase from 'firebase/app'; //
+import 'firebase/auth'; //
+import 'firebase/database'; //
 
 
 import App from './App.vue';
@@ -17,6 +22,31 @@ import currencyFilter from './filters/currency';
 import Pagination from './components/Pagination.vue';
 import Search from './components/Search.vue';
 // import Shoppingcart from './components/Shoppingcart.vue';
+
+
+// firebase
+// const firebaseConfig = {
+//   apiKey: process.env.FIREBASE_APIKEY,
+//   authDomain: process.env.FIREBASE_AUTHDOMAIN,
+//   databaseURL: process.env.FIREBASE_DATABASEURKURL,
+//   projectId: process.env.FIREBASE_PROJECTID,
+//   storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+//   messagingSenderId: process.env.FIREBASE_MESSAGEINGSENDERID,
+// }; //
+const firebaseConfig = {
+  apiKey: 'AIzaSyB8artxxayhFjDmFCHPMR6Uq2-FAf5aAck',
+  authDomain: 'vueshop-bca8f.firebaseapp.com',
+  databaseURL: 'https://vueshop-bca8f.firebaseio.com',
+  projectId: 'vueshop-bca8f',
+  storageBucket: 'vueshop-bca8f.appspot.com',
+  messagingSenderId: '602858287830',
+};
+console.log('firebaseConfig:', firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig); //
+window.firebase = firebase; //
+window.firebaseDb = firebaseApp.database(); //
+window.firebaseAuth = firebaseApp.auth(); //
+Vue.use(VueFire); //
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
