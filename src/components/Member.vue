@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="ml-auto">
     <div class="row" v-if="user.length===0">
       <!-- <div class="row" v-if="user.length===0"> -->
-      <div class="dropdown ml-auto col-6">
-        <button class="btn btn-success btn-cart" data-toggle="dropdown" data-flip="false">註冊</button>
-        <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px;" data-offset="400">
+      <div class="dropdown col-6">
+        <button class="btn btn-outline-primary" data-toggle="dropdown" data-flip="false">註冊</button>
+        <div class="dropdown-menu dropdown-menu-right" data-offset="400">
           <div class="px-3 py-4">
             <div class="row justify-content-center">
               <div class="col-md-12 shoppingcart-left-menu">
@@ -38,13 +38,12 @@
                 </form>
               </div>
             </div>
-            <router-link class="mt-3 btn btn-primary btn-block" to="/">登入</router-link>
           </div>
         </div>
       </div>
       <!--  -->
-      <div class="dropdown ml-auto col-6">
-        <button class="btn btn-success btn-cart" data-toggle="dropdown" data-flip="false">登入</button>
+      <div class="dropdown col-6">
+        <button class="btn btn-outline-primary" data-toggle="dropdown" data-flip="false">登入</button>
         <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px;" data-offset="400">
           <div class="px-3 py-4">
             <div class="row justify-content-center">
@@ -71,10 +70,10 @@
                       v-model="login.password"
                     >
                   </div>
-                  <div class="form-group form-check">
+                  <!-- <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck11">
                     <label class="form-check-label" for="exampleCheck11">Check me out</label>
-                  </div>
+                  </div>-->
                   <button
                     type="submit"
                     class="btn btn-primary"
@@ -83,13 +82,19 @@
                 </form>
               </div>
             </div>
-            <span>或是用其他方式登入</span>
-            <button class="btn btn-primary" @click.prevent="loginwithOuter('google')">
-              <i class="fab fa-google"></i>
-            </button>
-            <button class="btn btn-success" @click.prevent="loginwithOuter('facebook')">
-              <i class="fab fa-facebook"></i>
-            </button>
+            <div class="row">
+              <span class="ml-3">或是用其他方式登入</span>
+              <div class="ml-3">
+                <button class="btn" @click.prevent="loginwithOuter('google')">
+                  <i class="fab fa-google fa-2x text-primary"></i>
+                </button>
+              </div>
+              <div class="ml-3">
+                <button class="btn" @click.prevent="loginwithOuter('facebook')">
+                  <i class="fab fa-facebook fa-2x text-success"></i>
+                </button>
+              </div>
+            </div>
             <!--  -->
           </div>
         </div>
@@ -200,7 +205,7 @@ export default {
           const signupUser = {
             'email': result.user.email,
             'type': outer,
-            'uid': result.user.uid,
+            uid: result.user.uid,
           };
           firebaseDb.ref(`/user/${result.user.uid}`).set(signupUser);
           this.user = result.user;
@@ -220,7 +225,7 @@ export default {
           this.user = '';
           this.$store.dispatch('updateUser', '', { root: true });
           this.isAuth = false;
-        }).catch(err => { console.log('0.5'); console.log(error); });
+        }).catch(err => { console.log(error); });
     },
   },
   beforeCreate() {
@@ -230,11 +235,11 @@ export default {
         this.$store.dispatch('updateUser', user.uid, { root: true });
         this.isAuth = true;
       }
-    })
+    });
   },
   created() {
-    console.log(firebaseDb);
-    console.log(firebaseAuth);
+    console.log('firebaseDb:', firebaseDb);
+    console.log('firebaseAuth:', firebaseAuth);
   },
 };
 </script>

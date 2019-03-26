@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown ml-auto" v-if="carts.carts">
+  <div class="dropdown shopping-cart-wrap" v-if="carts.carts">
     <loading :active.sync="isLoading"></loading>
     <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false">
       <i

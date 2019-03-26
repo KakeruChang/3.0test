@@ -34,12 +34,13 @@ import Search from './components/Search.vue';
 //   messagingSenderId: process.env.FIREBASE_MESSAGEINGSENDERID,
 // }; //
 const firebaseConfig = {
-  apiKey: 'AIzaSyB8artxxayhFjDmFCHPMR6Uq2-FAf5aAck',
-  authDomain: 'vueshop-bca8f.firebaseapp.com',
-  databaseURL: 'https://vueshop-bca8f.firebaseio.com',
-  projectId: 'vueshop-bca8f',
-  storageBucket: 'vueshop-bca8f.appspot.com',
-  messagingSenderId: '602858287830',
+  // apiKey: 'AIzaSyB8artxxayhFjDmFCHPMR6Uq2-FAf5aAck',
+  apiKey: process.env.VUE_APP_FIREBASE_APIKEY,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTHDOMAIN,
+  databaseURL: process.env.VUE_APP_FIREBASE_DATABASEURKURL,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGEBUCKET,
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGEINGSENDERID,
 };
 console.log('firebaseConfig:', firebaseConfig);
 const firebaseApp = firebase.initializeApp(firebaseConfig); //

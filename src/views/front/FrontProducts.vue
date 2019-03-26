@@ -65,14 +65,14 @@
           >北海道</a>
         </div>
       </div>
-      <div class="row col-md-9 col-lg-10" style="padding-bottom:100px;height:100%;">
+      <div class="row col-md-9 col-lg-10 mx-md-auto" style="padding-bottom:100px;height:100%;">
         <div class="flyGift text-success">
           <i class="fas fa-gift fa-2x"></i>
         </div>
         <div class="col-md-12">
           <Pagination class="pt-3" :page-data="pagination" @pagemove="getProducts"></Pagination>
         </div>
-        <div class="col-md-12 row cardrealved" style="height:100%;">
+        <div class="col-md-12 row mx-md-auto" style="height:100%;">
           <!-- <div class="col-md row" style="overflow-y:scroll;"> -->
           <div
             class="col-lg-4 col-md-6 col-sm-12 pb-5"
@@ -85,49 +85,54 @@
               style=" background-size: cover; background-position: center"
               :style="{backgroundImage:`url(${item.imageUrl})`}"
             >
-              <div class="h-100 w-100 product-inner hover">
-                <button
-                  type="button"
-                  class="btn h-100 w-100"
-                  @click.prevent="gettheProduct(item.id)"
-                >
-                  <div class="card-body">
-                    <span class="badge badge-secondary float-right ml-2">{{item.category}}</span>
-                    <h5 class="text-left">
-                      <strong>
-                        <a
-                          href="#"
-                          class="text-light"
-                          @click.prevent="gotoTheProduct(item.id)"
-                        >{{item.title}}</a>
-                      </strong>
-                    </h5>
-                    <div class="frontproduct-text text-light">
-                      <p class="card-text">{{item.content}}</p>
+              <div class="product-inner-wrap">
+                <h5 class="text-left pl-3 pt-3">
+                  <strong class="text-light">{{item.title}}</strong>
+                </h5>
+                <div class="h-100 w-100 product-inner hover">
+                  <button
+                    type="button"
+                    class="btn h-100 w-100"
+                    @click.prevent="gettheProduct(item.id)"
+                  >
+                    <div class="card-body">
+                      <span class="badge badge-secondary float-right ml-2">{{item.category}}</span>
+                      <h5 class="text-left">
+                        <strong>
+                          <a
+                            href="#"
+                            class="text-light"
+                            @click.prevent="gotoTheProduct(item.id)"
+                          >{{item.title}}</a>
+                        </strong>
+                      </h5>
+                      <div class="frontproduct-text text-light">
+                        <p class="card-text">{{item.content}}</p>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-baseline">
+                        <div class="h5" v-if="!item.price">{{item.origin_price}} 元</div>
+                        <div class="h5 text-warning ml-auto" v-if="item.price">售價:{{item.price}}元</div>
+                      </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-baseline">
-                      <div class="h5" v-if="!item.price">{{item.origin_price}} 元</div>
-                      <div class="h5 text-warning ml-auto" v-if="item.price">售價:{{item.price}}元</div>
-                    </div>
+                  </button>
+                  <div class="card-footer d-flex">
+                    <button
+                      type="button"
+                      class="btn btn-outline-light btn-sm"
+                      @click="gotoTheProduct(item.id)"
+                    >
+                      <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
+                      查看更多
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-warning btn-sm ml-auto"
+                      @click="addtoCart(item.id);"
+                    >
+                      <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
+                      加到購物車
+                    </button>
                   </div>
-                </button>
-                <div class="card-footer d-flex">
-                  <button
-                    type="button"
-                    class="btn btn-outline-light btn-sm"
-                    @click="gotoTheProduct(item.id)"
-                  >
-                    <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
-                    查看更多
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-warning btn-sm ml-auto"
-                    @click="addtoCart(item.id);"
-                  >
-                    <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
-                    加到購物車
-                  </button>
                 </div>
               </div>
             </div>
@@ -474,27 +479,50 @@ a:hover {
   background-color: #fff;
   border-radius: 24px;
 }
-.product-inner {
-  opacity: 0;
-  transition: all 1s;
-  transform: translateY(50px);
-  h5 {
-    transition: all 2s;
-    transform: translateX(-50px);
+// .product-inner {
+//   opacity: 0;
+//   transition: all 1s;
+//   transform: translateY(50px);
+//   h5 {
+//     transition: all 2s;
+//     transform: translateX(-50px);
+//   }
+// }
+.product-inner-wrap {
+  & > h5 {
+    position: absolute;
   }
-}
-@media (min-width: 991px) {
-  .product-inner:hover {
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.5);
-    transform: translateY(0);
+  .product-inner {
+    opacity: 0;
+    transition: all 1s;
+    transform: translateY(50px);
     h5 {
-      transform: translateX(0);
+      transition: all 2s;
+      transform: translateX(-50px);
     }
   }
 }
-
+@media (min-width: 991px) {
+  .product-inner-wrap:hover {
+    & > h5 {
+      opacity: 0;
+    }
+    .product-inner {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.5);
+      transform: translateY(0);
+      h5 {
+        transform: translateX(0);
+      }
+    }
+  }
+}
 @media (max-width: 990px) {
+  .product-inner-wrap {
+    & > h5 {
+      opacity: 0;
+    }
+  }
   .product-inner.hover {
     opacity: 1;
     background-color: rgba(0, 0, 0, 0.5);

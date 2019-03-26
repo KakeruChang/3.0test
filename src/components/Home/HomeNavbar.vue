@@ -48,6 +48,7 @@
           to="/admin/products"
           v-if="userHomeNavbar===userAdministrator"
         >後台</router-link>
+        <div class="navbar-dashboard" v-if="userHomeNavbar!==userAdministrator"></div>
       </div>
     </nav>
   </div>

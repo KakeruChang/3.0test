@@ -2,7 +2,7 @@
   <div class="wrap">
     <nav aria-label="Page navigation example">
       <ul class="pagination">
-        <li class="page-item" :class="{'disabled':!pageData.has_pre}">
+        <li class="page-item btn-to-left" :class="{'disabled':!pageData.has_pre}">
           <a
             class="page-link"
             href="#"
@@ -21,7 +21,7 @@
         >
           <a class="page-link" href="#" @click.prevent="pageMove(page)">{{page}}</a>
         </li>
-        <li class="page-item ml-2" :class="{'disabled':!pageData.has_next}">
+        <li class="page-item ml-2 btn-to-right" :class="{'disabled':!pageData.has_next}">
           <a
             class="page-link"
             href="#"
@@ -75,5 +75,13 @@ export default {
 
 .page-item.disabled .page-link {
   color: #6c757d;
+}
+@media (max-width: 768px) {
+  .btn-to-left {
+    margin-left: auto;
+  }
+  .btn-to-right {
+    margin-right: auto;
+  }
 }
 </style>
