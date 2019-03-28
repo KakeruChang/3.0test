@@ -27,7 +27,7 @@
                       class="form-control"
                       id="exampleInputPassword1"
                       placeholder="Password"
-                      v-model="signup.password"
+                      v-model="signup.password_s"
                     >
                   </div>
                   <button
@@ -67,7 +67,7 @@
                       class="form-control"
                       id="exampleInputPassword11"
                       placeholder="Password"
-                      v-model="login.password"
+                      v-model="login.password_l"
                     >
                   </div>
                   <!-- <div class="form-group form-check">
@@ -106,7 +106,7 @@
         <i class="fas fa-user-check"></i>
       </button>
       <div class="dropdown-menu dropdown-menu-right" style="min-width: 300px;" data-offset="400">
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 18rem;border:none;">
           <div class="card-body row">
             <div class="col-4">
               <img :src="user.photoURL" style="max-width: 80px;" alt>
@@ -115,11 +115,13 @@
               <h5 class="card-title">name:{{user.displayName}}</h5>
               <span class="card-text">email:{{user.email}}</span>
               <br>
-              <span class="card-text">uid:{{user.uid}}</span>
+              <!-- <span class="card-text">uid:{{user.uid}}</span> -->
+              <span class="card-text" v-if="user.uid==='PaReC1Xb60gwBnTMskMhtBvM43U2'">權限:管理者</span>
+              <span class="card-text" v-else>權限:一般會員</span>
             </div>
           </div>
-          <div class="card-footer text-muted">
-            <button class="btn btn-danger ml-auto px-3" @click="logOut()">登出</button>
+          <div class="card-footer text-muted row justify-content-end">
+            <button class="btn btn-danger px-3" @click="logOut()">登出</button>
           </div>
         </div>
       </div>
@@ -129,20 +131,24 @@
 </template>
 
 <script>
+const { firebase } = window; //
+const { firebaseDb } = window; //
+const { firebaseAuth } = window; //
+
 
 export default {
-  name: "Member",
+  name: 'Member',
   data() {
     return {
       user: '',
-      isAuth: false, //Is authorized flag
+      isAuth: false, // Is authorized flag
       signup: {
         account: '',
-        password: '',
+        password_s: '',
       },
       login: {
         account: '',
-        password: '',
+        password_l: '',
       },
     };
   },
@@ -154,35 +160,45 @@ export default {
         status: '',
       };
       const email = vm.signup.account;
-      const password = vm.signup.password;
+      const password = vm.signup.password_s;
       firebaseAuth.createUserWithEmailAndPassword(email, password)
-        .then(user => {
+        .then((user) => {
+          const userUid = user.user.uid;
           const signupUser = {
-            'email': email,
-            'password': password,
-            'uid': user.user.uid,
+            email,
+            password,
+            userUid,
           };
-          firebaseDb.ref(`/user/${user.user.uid}`).set(signupUser);
+          firebaseDb.ref(`/user/${userUid}`).set(signupUser);
           response.message = '註冊成功';
           response.status = 'success';
           vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
-        }).catch(function (error) {
+        }).catch((error) => {
           const errorMessage = error.message;
           response.message = errorMessage;
           response.status = 'danger';
+          console.log('vm', vm.signup);
           vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
         });
     },
     loginToFirebase() {
       const vm = this;
-      console.log('loginToFirebase():', vm.login.account, vm.login.password)
+      const response = {
+        message: '',
+        status: '',
+      };
+      console.log('loginToFirebase():', vm.login.account, vm.login.password);
       const email = vm.login.account;
-      const password = vm.login.password;
+      const password = vm.login.password_l;
       firebaseAuth.signInWithEmailAndPassword(email, password)
         .then(() => {
           console.log('登入成功');
-        }).catch(function (error) {
+          response.message = '登入成功';
+          response.status = 'success';
+          vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
+        }).catch((error) => {
           console.log('登入失敗');
+          console.log(error);
         });
     },
     loginwithOuter(outer) {
@@ -193,18 +209,20 @@ export default {
       const vm = this;
       let provider = '';
       switch (outer) {
-        case "google":
+        case 'google':
           provider = new firebase.auth.GoogleAuthProvider();
           break;
-        case "facebook":
+        case 'facebook':
           provider = new firebase.auth.FacebookAuthProvider();
+          break;
+        default:
           break;
       }
       firebaseAuth.signInWithPopup(provider)
-        .then(result => {
+        .then((result) => {
           const signupUser = {
-            'email': result.user.email,
-            'type': outer,
+            email: result.user.email,
+            type: outer,
             uid: result.user.uid,
           };
           firebaseDb.ref(`/user/${result.user.uid}`).set(signupUser);
@@ -217,6 +235,7 @@ export default {
           response.status = 'success';
           vm.$store.dispatch('messageModules/updateMessage', response, { root: true });
         }).catch(err => console.error(err));
+      // }).catch(err => console.error(error));
     },
 
     logOut() {
@@ -225,7 +244,7 @@ export default {
           this.user = '';
           this.$store.dispatch('updateUser', '', { root: true });
           this.isAuth = false;
-        }).catch(err => { console.log(error); });
+        }).catch((err) => { console.log(err); });
     },
   },
   beforeCreate() {

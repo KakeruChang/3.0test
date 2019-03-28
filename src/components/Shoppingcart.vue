@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false">
       <i
-        class="fa fa-shopping-cart text-primary fa-2x animated infinite bounce slow"
+        class="fa fa-shopping-cart text-primary fa-2x animated infinite flip slower"
         aria-hidden="true"
       ></i>
       <!-- <i

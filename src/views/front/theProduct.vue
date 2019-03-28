@@ -55,7 +55,7 @@
           >北海道</a>
         </div>
       </div>
-      <div class="row col-md-9 col-lg-10" style="padding-bottom:100px;height:100%;">
+      <div class="row col-md-9 col-lg-10 mx-md-auto" style="padding-bottom:100px;height:100%;">
         <div class="flyGift">
           <i class="fas fa-gift fa-2x"></i>
         </div>
@@ -198,3 +198,11 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+@media (max-width: 768px) {
+  .mx-md-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+</style>

@@ -42,6 +42,7 @@
           </li>
         </ul>
         <Member/>
+        <div class="px-2"></div>
         <Shoppingcart/>
         <router-link
           class="nav-link mx-2 btn btn-outline-primary navbar-dashboard"
@@ -56,7 +57,7 @@
 
 <script>
 import Shoppingcart from '../Shoppingcart.vue';
-import Member from '../Member';
+import Member from '../Member.vue';
 
 export default {
   components: {
@@ -65,8 +66,9 @@ export default {
   },
   data() {
     return {
-      userAdministrator: process.env.VUE_APP_ADMINISTRATOR,
-    }
+      // userAdministrator: process.env.VUE_APP_ADMINISTRATOR,
+      userAdministrator: 'PaReC1Xb60gwBnTMskMhtBvM43U2',
+    };
   },
   computed: {
     isActiveofHomeNavebar() {

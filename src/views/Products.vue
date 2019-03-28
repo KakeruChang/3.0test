@@ -27,8 +27,10 @@
             <span v-else>未啟用</span>
           </td>
           <td>
-            <button class="btn btn-outline-primary btn-sm" @click="Openmodal(false,item)">編輯</button>
-            <button class="btn btn-outline-danger btn-sm" @click="Opendeletemodal(item)">刪除</button>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button class="btn btn-outline-primary btn-sm" @click="Openmodal(false,item)">編輯</button>
+              <button class="btn btn-outline-danger btn-sm" @click="Opendeletemodal(item)">刪除</button>
+            </div>
           </td>
         </tr>
       </tbody>

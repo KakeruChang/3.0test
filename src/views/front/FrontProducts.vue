@@ -29,7 +29,10 @@
             aria-controls="v-pills-home"
             aria-selected="true"
             @click.prevent="updateFilter('');getProducts();"
-          >全部</a>
+          >
+            <div>全部</div>
+            <div class="fs-12">ゼンブ</div>
+          </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             :class="{ 'active': productFilter==='関東' }"
@@ -40,7 +43,10 @@
             aria-controls="v-pills-profile"
             aria-selected="false"
             @click.prevent="updateFilter('関東');getProducts();"
-          >関東</a>
+          >
+            <div>関東</div>
+            <div class="fs-12">カントウ</div>
+          </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             :class="{ 'active': productFilter==='関西' }"
@@ -51,7 +57,10 @@
             aria-controls="v-pills-messages"
             aria-selected="false"
             @click.prevent="updateFilter('関西');getProducts();"
-          >関西</a>
+          >
+            <div>関西</div>
+            <div class="fs-12">カンサイ</div>
+          </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             :class="{ 'active': productFilter==='北海道' }"
@@ -62,7 +71,10 @@
             aria-controls="v-pills-settings"
             aria-selected="false"
             @click.prevent="updateFilter('北海道');getProducts();"
-          >北海道</a>
+          >
+            <div>北海道</div>
+            <div class="fs-12">ホッカイドウ</div>
+          </a>
         </div>
       </div>
       <div class="row col-md-9 col-lg-10 mx-md-auto" style="padding-bottom:100px;height:100%;">
@@ -87,7 +99,7 @@
             >
               <div class="product-inner-wrap">
                 <h5 class="text-left pl-3 pt-3">
-                  <strong class="text-light">{{item.title}}</strong>
+                  <strong class="text-primary border border-primary rounded p-1">{{item.title}}</strong>
                 </h5>
                 <div class="h-100 w-100 product-inner hover">
                   <button
@@ -101,7 +113,7 @@
                         <strong>
                           <a
                             href="#"
-                            class="text-light"
+                            class="text-light border border-light p-1"
                             @click.prevent="gotoTheProduct(item.id)"
                           >{{item.title}}</a>
                         </strong>
@@ -531,5 +543,9 @@ a:hover {
       transform: translateX(0);
     }
   }
+}
+.fs-12 {
+  font-size: 12px;
+  line-height: 75%;
 }
 </style>
