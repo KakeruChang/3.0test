@@ -113,7 +113,7 @@
                         <strong>
                           <a
                             href="#"
-                            class="text-light border border-light p-1"
+                            class="text-light border border-light p-1 product-inner-title"
                             @click.prevent="gotoTheProduct(item.id)"
                           >{{item.title}}</a>
                         </strong>

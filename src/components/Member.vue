@@ -227,8 +227,6 @@ export default {
           };
           firebaseDb.ref(`/user/${result.user.uid}`).set(signupUser);
           this.user = result.user;
-          console.log('this.user:', this.user);
-          console.log('this.user.uid:', this.user.uid);
           // vm.$store.dispatch('updateUser', result.user, { root: true });
           this.$store.dispatch('updateUser', this.user.uid, { root: true });
           response.message = '登入成功';

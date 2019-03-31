@@ -13,7 +13,6 @@ import firebase from 'firebase/app'; //
 import 'firebase/auth'; //
 import 'firebase/database'; //
 
-
 import App from './App.vue';
 import router from './router';
 import store from './store/store';
@@ -47,6 +46,7 @@ window.firebase = firebase; //
 window.firebaseDb = firebaseApp.database(); //
 window.firebaseAuth = firebaseApp.auth(); //
 Vue.use(VueFire); //
+
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
