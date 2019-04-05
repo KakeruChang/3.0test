@@ -18,9 +18,8 @@ $primaryColor: rgba(243, 190, 43, 0.5);
 .productmenu-item {
     text-align: center;
     font-size: 30px; //box-shadow: 0px 3px 5px rgba(20%, 20%, 40%, 0.6);
-    color: #fff;
-    background-color: $mainBgColor;
-    border: rgb(243, 190, 43) solid 1px;
+    color: rgb(243, 190, 43);
+    border: rgb(150, 150, 150) solid 1px;
 }
 
 @media (min-width:768px) {
@@ -29,9 +28,59 @@ $primaryColor: rgba(243, 190, 43, 0.5);
     }
 }
 
-.productmenu-item:hover {
-    color: #fff;
+
+.productmenu-item-zh {
+    font-size: 30px;
 }
+
+.productmenu-item-jp {
+    font-size: 12px;
+}
+
+
+@media (max-width:855px) {
+    .productmenu-item-zh {
+        font-size: 25px;
+    }
+
+    .productmenu-item-jp {
+        font-size: 10px;
+    }
+}
+
+@media (max-width:768px) {
+    .productmenu-item-zh {
+        font-size: 30px;
+    }
+
+    .productmenu-item-jp {
+        font-size: 12px;
+    }
+}
+
+@media (max-width:640px) {
+    .productmenu-item-zh {
+        font-size: 25px;
+    }
+
+    .productmenu-item-jp {
+        font-size: 10px;
+    }
+}
+
+@media (max-width:576px) {
+    .productmenu-item-zh {
+        font-size: 30px;
+    }
+
+    .productmenu-item-jp {
+        font-size: 12px;
+    }
+}
+
+// .productmenu-item:hover {
+//     color: #fff;
+// }
 
 // @media (min-width:768px) {
 //     .productmenu-item:hover {
@@ -62,13 +111,63 @@ $primaryColor: rgba(243, 190, 43, 0.5);
     right: -1px;
 }
 
-.nav-link.active.nav-link-frontproducts {
-    background-color: $primaryColor;
+.nav-link.nav-link-frontproducts {
+    &>div {
+        &>div {
+            &>.productmenu-item-img-all {
+                content: url("./assets/gif/tenor_0_q.png");
+            }
+
+            &>.productmenu-item-img-kantou {
+                content: url("./assets/gif/tenor_1_q.png");
+            }
+
+            &>.productmenu-item-img-kansai {
+                content: url("./assets/gif/tenor_3_q.png");
+            }
+
+            &>.productmenu-item-img-hokkaidou {
+                content: url("./assets/gif/tenor_4_q.png");
+            }
+        }
+    }
 }
 
+.nav-link.active.nav-link-frontproducts {
+    // background-color: $primaryColor;
+    background-color: #fff;
+    color: #000;
+
+    &>div {
+        &>div {
+            &>.productmenu-item-img-all {
+                content: url("./assets/gif/tenor_0.gif");
+            }
+
+            &>.productmenu-item-img-kantou {
+                content: url("./assets/gif/tenor_1.gif");
+            }
+
+            &>.productmenu-item-img-kansai {
+                content: url("./assets/gif/tenor_3.gif");
+            }
+
+            &>.productmenu-item-img-hokkaidou {
+                content: url("./assets/gif/tenor_4.gif");
+            }
+        }
+    }
+}
+
+// .nav-pills .nav-link {
+//     text-shadow: 0px 0px 20px #000;
+// }
 .nav-pills .nav-link {
-    border-radius: 0;
-    text-shadow: 0px 0px 20px #000;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.nav-pills .nav-link:hover {
+    color: $mainBgColor;
 }
 
 @media (min-width:768px) {
@@ -86,10 +185,10 @@ $primaryColor: rgba(243, 190, 43, 0.5);
 //     left: auto;
 // }
 .wrap-FrontProducts {
-    background-image: url("./assets/home_bg/product_.jpg");
-    background-size: cover; //
-    background-position: center center; //
-    background-attachment: fixed; //
+    // background-image: url("./assets/home_bg/product_.jpg");
+    // background-size: cover; //
+    // background-position: center center; //
+    // background-attachment: fixed; //
     padding-bottom: 350px;
 }
 
@@ -123,22 +222,9 @@ $primaryColor: rgba(243, 190, 43, 0.5);
     }
 }
 
-@media (max-width:1500px) {
-    .product-inner-title {
-        font-size: 16px;
-    }
-}
 
-@media (max-width:960px) {
-    .product-inner-title {
-        font-size: 12px;
-    }
-}
-
-@media (max-width:768px) {
-    .product-inner-title {
-        font-size: 20px;
-    }
+.product-inner-title {
+    font-size: 20px;
 }
 
 @media (max-width:400px) {
@@ -146,6 +232,24 @@ $primaryColor: rgba(243, 190, 43, 0.5);
         font-size: 12px;
     }
 }
+
+// @media (max-width:1350px) {
+//     .product-inner-title {
+//         font-size: 12px;
+//     }
+// }
+
+// @media (max-width:960px) {
+//     .product-inner-title {
+//         font-size: 12px;
+//     }
+// }
+
+// @media (max-width:768px) {
+//     .product-inner-title {
+//         font-size: 20px;
+//     }
+// }
 
 .btn-addToCart {
     background-color: rgb(243, 190, 43);
@@ -165,7 +269,7 @@ $primaryColor: rgba(243, 190, 43, 0.5);
  */
 
 .shoppingcart-menu {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 500px;
 }
 

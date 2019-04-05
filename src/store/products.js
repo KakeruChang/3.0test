@@ -30,7 +30,7 @@ export default {
         },
         getProducts(context) {
             const vm = this;
-            const numofPerpage = 9;
+            const numofPerpage = 6;
             const urlAll = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
             context.commit('LOADING', true, { root: true });
 

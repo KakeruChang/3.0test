@@ -2,7 +2,8 @@
   <div class="wrap-FrontProducts container-fluid">
     <loading :active.sync="isLoading"></loading>
     <div class="row pt-5 pb-4">
-      <div class="col-md-3 col-lg-2 pb-3">
+      <div class="col-md-0 col-lg-1"></div>
+      <div class="col-md-3 col-lg-3 pb-3">
         <div
           class="nav nav-pills nav-pills-frontproducts row sticky-top"
           id="v-pills-tab"
@@ -30,8 +31,17 @@
             aria-selected="true"
             @click.prevent="updateFilter('');getProducts();"
           >
-            <div>全部</div>
-            <div class="fs-12">ゼンブ</div>
+            <!--  -->
+            <div class="row justify-content-center">
+              <div class="col-lg-5 col-md-6 col-4">
+                <img class="ml-auto productmenu-item-img-all" src style="max-width:70px;">
+              </div>
+              <div class="col-lg-6 col-md-6 col-4 text-center" style="padding-left:0;">
+                <div class="productmenu-item-zh">全部</div>
+                <div class="fs-12 productmenu-item-jp">ゼンブ</div>
+              </div>
+            </div>
+            <!--  -->
           </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
@@ -44,8 +54,17 @@
             aria-selected="false"
             @click.prevent="updateFilter('関東');getProducts();"
           >
-            <div>関東</div>
-            <div class="fs-12">カントウ</div>
+            <!--  -->
+            <div class="row justify-content-center">
+              <div class="col-lg-5 col-md-6 col-4" style>
+                <img class="ml-auto productmenu-item-img-kantou" style="max-width:70px;">
+              </div>
+              <div class="col-lg-6 col-md-6 col-4 text-center" style="padding-left:0;">
+                <div class="productmenu-item-zh">関東</div>
+                <div class="fs-12 productmenu-item-jp">カントウ</div>
+              </div>
+            </div>
+            <!--  -->
           </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
@@ -58,8 +77,17 @@
             aria-selected="false"
             @click.prevent="updateFilter('関西');getProducts();"
           >
-            <div>関西</div>
-            <div class="fs-12">カンサイ</div>
+            <!--  -->
+            <div class="row justify-content-center">
+              <div class="col-lg-5 col-md-6 col-4" style>
+                <img class="ml-auto productmenu-item-img-kansai" style="max-width:70px;">
+              </div>
+              <div class="col-lg-6 col-md-6 col-4 text-center" style="padding-left:0;">
+                <div class="productmenu-item-zh">関西</div>
+                <div class="fs-12 productmenu-item-jp">カンサイ</div>
+              </div>
+            </div>
+            <!--  -->
           </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
@@ -72,12 +100,21 @@
             aria-selected="false"
             @click.prevent="updateFilter('北海道');getProducts();"
           >
-            <div>北海道</div>
-            <div class="fs-12">ホッカイドウ</div>
+            <!--  -->
+            <div class="row justify-content-center">
+              <div class="col-lg-5 col-md-6 col-4" style>
+                <img class="ml-auto productmenu-item-img-hokkaidou" style="max-width:70px;">
+              </div>
+              <div class="col-lg-6 col-md-6 col-4 text-center" style="padding-left:0;">
+                <div class="productmenu-item-zh">北海道</div>
+                <div class="fs-12 productmenu-item-jp">ホッカイドウ</div>
+              </div>
+            </div>
+            <!--  -->
           </a>
         </div>
       </div>
-      <div class="row col-md-9 col-lg-10 mx-md-auto" style="padding-bottom:100px;height:100%;">
+      <div class="row col-md-8 col-lg-8 mx-md-auto" style="padding-bottom:100px;height:100%;">
         <div class="flyGift text-success">
           <i class="fas fa-gift fa-2x"></i>
         </div>
@@ -86,21 +123,26 @@
         </div>
         <div class="col-md-12 row mx-md-auto" style="height:100%;">
           <!-- <div class="col-md row" style="overflow-y:scroll;"> -->
-          <div
-            class="col-lg-4 col-md-6 col-sm-12 pb-5"
-            v-for="item in productsRevealed"
-            :key="item.id"
-          >
+          <div class="col-lg-6 col-12 pb-5" v-for="item in productsRevealed" :key="item.id">
             <!-- 改造中 -->
             <div
               class="border-0"
-              style=" background-size: cover; background-position: center"
+              style=" background-size: cover; background-position: center;box-shadow:0 1px 5px #000;"
               :style="{backgroundImage:`url(${item.imageUrl})`}"
             >
-              <div class="product-inner-wrap">
-                <h5 class="text-left pl-3 pt-3">
+              <div class="product-inner-wrap" style="position:relative;">
+                <h5 class="text-left pl-3 pt-3 text-main-shadow">
                   <strong class="text-primary border border-primary rounded p-1">{{item.title}}</strong>
                 </h5>
+                <h5
+                  class="badge badge-danger float-right"
+                  style="font-size:16px;position:absolute;right:-5px;top:-5px;"
+                >{{item.category}}</h5>
+                <h5
+                  class="h5 text-primary mr-3 mb-3 text-main-shadow"
+                  style="position:absolute;right:0;bottom:0;"
+                  v-if="item.price"
+                >${{item.price}}</h5>
                 <div class="h-100 w-100 product-inner hover">
                   <button
                     type="button"
@@ -108,29 +150,32 @@
                     @click.prevent="gettheProduct(item.id)"
                   >
                     <div class="card-body">
-                      <span class="badge badge-secondary float-right ml-2">{{item.category}}</span>
+                      <span
+                        class="badge badge-danger float-right ml-2 py-1 px-2"
+                        style="font-size:16px;"
+                      >{{item.category}}</span>
                       <h5 class="text-left">
                         <strong>
                           <a
                             href="#"
-                            class="text-light border border-light p-1 product-inner-title"
+                            class="text-info border border-info p-1 product-inner-title"
                             @click.prevent="gotoTheProduct(item.id)"
                           >{{item.title}}</a>
                         </strong>
                       </h5>
-                      <div class="frontproduct-text text-light">
+                      <div class="frontproduct-text text-dark">
                         <p class="card-text">{{item.content}}</p>
                       </div>
                       <div class="d-flex justify-content-between align-items-baseline">
                         <div class="h5" v-if="!item.price">{{item.origin_price}} 元</div>
-                        <div class="h5 text-warning ml-auto" v-if="item.price">售價:{{item.price}}元</div>
+                        <div class="h5 text-primary ml-auto" v-if="item.price">售價:{{item.price}}元</div>
                       </div>
                     </div>
                   </button>
                   <div class="card-footer d-flex">
                     <button
                       type="button"
-                      class="btn btn-outline-light btn-sm"
+                      class="btn btn-outline-info btn-sm"
                       @click="gotoTheProduct(item.id)"
                     >
                       <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
@@ -340,31 +385,26 @@ export default {
   data() {
     return {
       product: {}, // 存放modal資料
-      // isLoading: false, // true時啟動loading效果
       status: {
         loadingItem: '',
       },
-      form: {
-        user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: '',
-          payment_method: '',
-        },
-        message: '',
-      },
-      // carts: [],
-      coupon_code: '',
-      // productFilter: '',
-      searchFilter: '',
+      // form: {
+      //   user: {
+      //     name: '',
+      //     email: '',
+      //     tel: '',
+      //     address: '',
+      //     payment_method: '',
+      //   },
+      //   message: '',
+      // },
+      // coupon_code: '',
+      // searchFilter: '',
     };
   },
   methods: {
     getProducts(page = 1) {
       this.$store.dispatch('productsModules/updatePage', page);
-      // this.$store.dispatch('productsModules/updateProductFilter', this.productFilter);
-      // this.$store.dispatch('productsModules/updateSearchFilter', this.searchFilter);//
       this.$store.dispatch('productsModules/getProducts');
     },
     updateFilter(filter) {
@@ -378,13 +418,10 @@ export default {
         vm.product = response.data.product;
         $('#productModal').modal('show');
         vm.product.num = 1;
-        console.log(response.data);
         vm.status.loadingItem = '';
       });
     },
     moveGift() {
-      // const clickX = window.event.clientX;
-      // const clickY = window.event.clientY;
       $('.flyGift').css({
         display: 'inline',
       });
@@ -461,6 +498,10 @@ export default {
     carts() {
       return this.$store.state.cartModules.carts;
     },
+    theUser() {
+      return this.$store.state.userWho;
+    },
+
   },
   created() {
     this.getProducts();
@@ -521,7 +562,7 @@ a:hover {
     }
     .product-inner {
       opacity: 1;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: #fff;
       transform: translateY(0);
       h5 {
         transform: translateX(0);
@@ -545,7 +586,11 @@ a:hover {
   }
 }
 .fs-12 {
-  font-size: 12px;
+  // font-size: 12px;
   line-height: 75%;
+}
+.text-main-shadow {
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3), 0px 0px 10px rgba(0, 0, 0, 0.3),
+    0px 0px 10px rgba(0, 0, 0, 0.3), 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 </style>

@@ -61,6 +61,20 @@
         </div>
         <div class="col-md-12 mt-3">
           <!--  -->
+          <div>
+            <ol class="breadcrumb" style="background-color:#fff;">
+              <li class="breadcrumb-item">
+                <a href="#/">首頁</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a
+                  href="#/frontProducts"
+                  @click.prevent="gotoProducts(product.category)"
+                >{{product.category}}</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
+            </ol>
+          </div>
           <div class="row my-3">
             <div class="col-md-8">
               <div

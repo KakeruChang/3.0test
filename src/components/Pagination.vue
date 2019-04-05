@@ -65,16 +65,18 @@ export default {
 .page-item .page-link {
   background-color: rgba(100, 100, 100, 0.3);
   border-color: #fff;
-  color: #fff;
+  color: #000;
+  box-shadow: #000 0px 1px 3px;
 }
 .page-item.active .page-link {
-  text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff,
+  /* text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff,
     0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff, 0px 0px 10px #fff,
-    0px 0px 10px #fff;
+    0px 0px 10px #fff; */
+  background-color: rgba(243, 190, 43, 0.5);
 }
 
 .page-item.disabled .page-link {
-  color: #6c757d;
+  color: rgba(0, 0, 0, 0.1);
 }
 @media (max-width: 768px) {
   .btn-to-left {

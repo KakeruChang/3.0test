@@ -48,7 +48,7 @@ main {
   height: 100%;
 }
 .footerNavbar {
-  background-color: rgba(50, 50, 50, 0.3) !important;
+  background-color: #446da2 !important;
 }
 @media (max-width: 990px) {
   .btn-navbottom {
