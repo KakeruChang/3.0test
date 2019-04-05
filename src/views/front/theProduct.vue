@@ -18,8 +18,20 @@
             role="tab"
             aria-controls="v-pills-home"
             aria-selected="true"
-            @click.prevent="gotoProducts('')"
-          >全部</a>
+            @click.prevent="updateFilter('');getProducts();"
+          >
+            <!--  -->
+            <div class="row justify-content-center">
+              <div class="col-lg-5 col-md-6 col-4">
+                <img class="ml-auto productmenu-item-img-all" src style="max-width:70px;">
+              </div>
+              <div class="col-lg-6 col-md-6 col-4 text-center" style="padding-left:0;">
+                <div class="productmenu-item-zh">全部</div>
+                <div class="fs-12 productmenu-item-jp">ゼンブ</div>
+              </div>
+            </div>
+            <!--  -->
+          </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             :class="{ 'active': productFilter==='関東' }"
@@ -29,8 +41,20 @@
             role="tab"
             aria-controls="v-pills-profile"
             aria-selected="false"
-            @click.prevent="gotoProducts('関東')"
-          >関東</a>
+            @click.prevent="updateFilter('関東');getProducts();"
+          >
+            <!--  -->
+            <div class="row justify-content-center">
+              <div class="col-lg-5 col-md-6 col-4" style>
+                <img class="ml-auto productmenu-item-img-kantou" style="max-width:70px;">
+              </div>
+              <div class="col-lg-6 col-md-6 col-4 text-center" style="padding-left:0;">
+                <div class="productmenu-item-zh">関東</div>
+                <div class="fs-12 productmenu-item-jp">カントウ</div>
+              </div>
+            </div>
+            <!--  -->
+          </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             :class="{ 'active': productFilter==='関西' }"
@@ -40,8 +64,20 @@
             role="tab"
             aria-controls="v-pills-messages"
             aria-selected="false"
-            @click.prevent="gotoProducts('関西')"
-          >関西</a>
+            @click.prevent="updateFilter('関西');getProducts();"
+          >
+            <!--  -->
+            <div class="row justify-content-center">
+              <div class="col-lg-5 col-md-6 col-4" style>
+                <img class="ml-auto productmenu-item-img-kansai" style="max-width:70px;">
+              </div>
+              <div class="col-lg-6 col-md-6 col-4 text-center" style="padding-left:0;">
+                <div class="productmenu-item-zh">関西</div>
+                <div class="fs-12 productmenu-item-jp">カンサイ</div>
+              </div>
+            </div>
+            <!--  -->
+          </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
             :class="{ 'active': productFilter==='北海道' }"
@@ -51,8 +87,20 @@
             role="tab"
             aria-controls="v-pills-settings"
             aria-selected="false"
-            @click.prevent="gotoProducts('北海道')"
-          >北海道</a>
+            @click.prevent="updateFilter('北海道');getProducts();"
+          >
+            <!--  -->
+            <div class="row justify-content-center">
+              <div class="col-lg-5 col-md-6 col-4" style>
+                <img class="ml-auto productmenu-item-img-hokkaidou" style="max-width:70px;">
+              </div>
+              <div class="col-lg-6 col-md-6 col-4 text-center" style="padding-left:0;">
+                <div class="productmenu-item-zh">北海道</div>
+                <div class="fs-12 productmenu-item-jp">ホッカイドウ</div>
+              </div>
+            </div>
+            <!--  -->
+          </a>
         </div>
       </div>
       <div class="row col-md-9 col-lg-10 mx-md-auto" style="padding-bottom:100px;height:100%;">

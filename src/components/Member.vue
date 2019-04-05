@@ -2,9 +2,18 @@
   <div class="ml-auto">
     <div class="row" v-if="user.length===0">
       <!-- <div class="row" v-if="user.length===0"> -->
-      <div class="dropdown col-6">
-        <button class="btn btn-outline-primary" data-toggle="dropdown" data-flip="false">註冊</button>
-        <div class="dropdown-menu dropdown-menu-right" data-offset="400">
+      <div class="col-6">
+        <!-- <div class="dropdown col-6"> -->
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          data-toggle="modal"
+          data-target="#signupModal"
+        >註冊</button>
+      </div>
+      <!-- <button class="btn btn-outline-primary" data-toggle="dropdown" data-flip="false">註冊</button> -->
+
+      <!-- <div class="dropdown-menu dropdown-menu-right" data-offset="400">
           <div class="px-3 py-4">
             <div class="row justify-content-center">
               <div class="col-md-12 shoppingcart-left-menu">
@@ -39,12 +48,20 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
+      </div>-->
       <!--  -->
-      <div class="dropdown col-6">
-        <button class="btn btn-outline-primary" data-toggle="dropdown" data-flip="false">登入</button>
-        <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px;" data-offset="400">
+      <div class="col-6">
+        <!-- <div class="dropdown col-6"> -->
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          data-toggle="modal"
+          data-target="#loginModal"
+        >登入</button>
+      </div>
+    </div>
+    <!-- <button class="btn btn-outline-primary" data-toggle="dropdown" data-flip="false">登入</button> -->
+    <!-- <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px;" data-offset="400">
           <div class="px-3 py-4">
             <div class="row justify-content-center">
               <div class="col-md-12 shoppingcart-left-menu">
@@ -70,10 +87,6 @@
                       v-model="login.password_l"
                     >
                   </div>
-                  <!-- <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck11">
-                    <label class="form-check-label" for="exampleCheck11">Check me out</label>
-                  </div>-->
                   <button
                     type="submit"
                     class="btn btn-primary"
@@ -95,17 +108,19 @@
                 </button>
               </div>
             </div>
-            <!--  -->
           </div>
-        </div>
-      </div>
-    </div>
+    </div>-->
     <!-- 已登入 -->
-    <div class="dropdown ml-auto" v-if="user.length!==0">
-      <button class="btn btn-primary" data-toggle="dropdown" data-flip="false">
+    <div class="ml-auto" v-if="user.length!==0">
+      <!-- <div class="dropdown ml-auto" v-if="user.length!==0"> -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memberModal">
         <i class="fas fa-user-check"></i>
       </button>
-      <div class="dropdown-menu dropdown-menu-right" style="min-width: 300px;" data-offset="400">
+    </div>
+    <!-- <button class="btn btn-primary" data-toggle="dropdown" data-flip="false">
+        <i class="fas fa-user-check"></i>
+    </button>-->
+    <!-- <div class="dropdown-menu dropdown-menu-right" style="min-width: 300px;" data-offset="400">
         <div class="card" style="width: 18rem;border:none;">
           <div class="card-body row">
             <div class="col-4">
@@ -115,7 +130,6 @@
               <h5 class="card-title">name:{{user.displayName}}</h5>
               <span class="card-text">email:{{user.email}}</span>
               <br>
-              <!-- <span class="card-text">uid:{{user.uid}}</span> -->
               <span class="card-text" v-if="user.uid==='PaReC1Xb60gwBnTMskMhtBvM43U2'">權限:管理者</span>
               <span class="card-text" v-else>權限:一般會員</span>
             </div>
@@ -124,13 +138,172 @@
             <button class="btn btn-danger px-3" @click="logOut()">登出</button>
           </div>
         </div>
+    </div>-->
+    <!-- 已登入 -->
+    <div
+      class="modal fade"
+      id="signupModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="signupModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signupModalLabel">註冊</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class>
+              <div class="row justify-content-center">
+                <div class="col-md-12 shoppingcart-left-menu">
+                  <form>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">電子郵件</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter email"
+                        v-model="signup.account"
+                      >
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">密碼</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="exampleInputPassword1"
+                        placeholder="Password"
+                        v-model="signup.password_s"
+                      >
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      @click.prevent="signupToFirebase()"
+                    >註冊</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- 已登入 -->
+    <div
+      class="modal fade"
+      id="loginModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">登入</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row justify-content-center">
+              <div class="col-md-12 shoppingcart-left-menu">
+                <form>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">電子郵件</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="exampleInputEmail11"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter email"
+                      v-model="login.account"
+                    >
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">密碼</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="exampleInputPassword11"
+                      placeholder="Password"
+                      v-model="login.password_l"
+                    >
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    @click.prevent="loginToFirebase()"
+                  >登入</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="col-6">或是用其他方式登入</div>
+            <div class="col-3">
+              <button class="btn" @click.prevent="loginwithOuter('google')">
+                <i class="fab fa-google fa-2x text-primary"></i>
+              </button>
+            </div>
+            <div class="col-3">
+              <button class="btn" @click.prevent="loginwithOuter('facebook')">
+                <i class="fab fa-facebook fa-2x text-success"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="memberModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="memberModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="memberModalLabel">{{user.displayName}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="card" style="width: 18rem;border:none;">
+              <div class="card-body row">
+                <div class="col-4">
+                  <img :src="user.photoURL" style="max-width: 80px;" alt>
+                </div>
+                <div class="col-8">
+                  <span class="card-text">email:{{user.email}}</span>
+                  <br>
+                  <span class="card-text" v-if="user.uid==='PaReC1Xb60gwBnTMskMhtBvM43U2'">權限:管理者</span>
+                  <span class="card-text" v-else>權限:一般會員</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-end">
+            <button class="btn btn-danger" @click="logOut()">登出</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import $ from 'jquery';
+
 const { firebase } = window; //
 const { firebaseDb } = window; //
 const { firebaseAuth } = window; //
@@ -192,6 +365,7 @@ export default {
       const password = vm.login.password_l;
       firebaseAuth.signInWithEmailAndPassword(email, password)
         .then(() => {
+          $('#loginModal').modal('hide'); //
           console.log('登入成功');
           response.message = '登入成功';
           response.status = 'success';
@@ -225,6 +399,7 @@ export default {
             type: outer,
             uid: result.user.uid,
           };
+          $('#loginModal').modal('hide'); //
           firebaseDb.ref(`/user/${result.user.uid}`).set(signupUser);
           this.user = result.user;
           // vm.$store.dispatch('updateUser', result.user, { root: true });
@@ -239,6 +414,7 @@ export default {
     logOut() {
       firebaseAuth.signOut()
         .then(() => {
+          $('#memberModal').modal('hide'); //
           this.user = '';
           this.$store.dispatch('updateUser', '', { root: true });
           this.isAuth = false;

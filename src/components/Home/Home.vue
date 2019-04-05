@@ -55,4 +55,7 @@ main {
     display: inline !important;
   }
 }
+.fixed-bottom {
+  z-index: 1021;
+}
 </style>

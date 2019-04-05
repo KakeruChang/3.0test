@@ -578,7 +578,7 @@ a:hover {
   }
   .product-inner.hover {
     opacity: 1;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(150, 150, 150, 0.5);
     transform: translateY(0);
     h5 {
       transform: translateX(0);

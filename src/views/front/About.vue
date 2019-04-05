@@ -136,6 +136,11 @@ export default {
 .sec-rotate-inside {
   transform: rotate(-7.5deg);
 }
+@media (max-width: 768px) {
+  .sec-rotate-inside {
+    padding-top: 3rem !important;
+  }
+}
 .benefit {
   padding-top: 100px;
   height: 350px;
