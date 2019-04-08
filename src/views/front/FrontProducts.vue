@@ -1,6 +1,10 @@
 <template>
   <div class="wrap-FrontProducts container-fluid">
-    <loading :active.sync="isLoading"></loading>
+    <loading class="topofAll" :active.sync="isLoading">
+      <template slot="default">
+        <img src="./../../assets/gif/no.gif" alt>
+      </template>
+    </loading>
     <div class="row pt-5 pb-4">
       <div class="col-md-0 col-lg-1"></div>
       <div class="col-md-3 col-lg-3 pb-3">
@@ -175,7 +179,7 @@
                   <div class="card-footer d-flex">
                     <button
                       type="button"
-                      class="btn btn-outline-info btn-sm"
+                      class="btn btn-outline-primary btn-sm"
                       @click="gotoTheProduct(item.id)"
                     >
                       <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
@@ -183,7 +187,7 @@
                     </button>
                     <button
                       type="button"
-                      class="btn btn-outline-warning btn-sm ml-auto"
+                      class="btn btn-primary btn-sm ml-auto"
                       @click="addtoCart(item.id);"
                     >
                       <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>

@@ -1,6 +1,10 @@
 <template>
   <div class="dropdown shopping-cart-wrap" v-if="carts.carts">
-    <loading :active.sync="isLoading"></loading>
+    <loading class="topofAll" :active.sync="isLoading">
+      <template slot="default">
+        <img src="./../assets/gif/no.gif" alt>
+      </template>
+    </loading>
     <button class="btn btn-sm btn-cart" data-toggle="modal" data-target="#cartModal">
       <!-- <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false"> -->
       <i
@@ -132,13 +136,21 @@
               </div>
             </div>
             <div class="modal-footer">
-              <router-link
+              <!-- <router-link
                 class="btn btn-primary btn-block"
                 to="/finishorder/orders"
                 v-if="carts.carts.length!==0"
               >
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i> 結帳去
-              </router-link>
+              </router-link>-->
+              <a
+                class="btn btn-primary btn-block"
+                href="javascript:void(0)"
+                v-if="carts.carts.length!==0"
+                @click.prevent="gotoCheckout()"
+              >
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>結帳去
+              </a>
             </div>
           </div>
         </div>
@@ -149,6 +161,7 @@
 </template>
 
 <script>
+import $ from 'jquery';
 import { mapActions } from 'vuex';
 
 export default {
@@ -163,6 +176,10 @@ export default {
       this.$store.dispatch('cartModules/removeCartItem', id);
     },
     ...mapActions('cartModules', ['getCart']),
+    gotoCheckout() {
+      $('#cartModal').modal('hide');
+      this.$router.push('/finishorder/orders');
+    },
   },
   computed: {
     isLoading() {

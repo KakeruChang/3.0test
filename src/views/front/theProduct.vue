@@ -1,9 +1,11 @@
 <template>
   <div class="wrap-FrontProducts container-fluid">
-    <loading :active.sync="isLoading"></loading>
+    <loading class="topofAll" :active.sync="isLoading">
+      <img src="./../../assets/gif/no.gif" alt>
+    </loading>
     <div class="row pt-5 pb-4">
       <div class="col-md-3 col-lg-2 pb-3">
-        <div
+        <!-- <div
           class="nav nav-pills nav-pills-frontproducts row sticky-top"
           id="v-pills-tab"
           role="tablist"
@@ -18,9 +20,8 @@
             role="tab"
             aria-controls="v-pills-home"
             aria-selected="true"
-            @click.prevent="updateFilter('');getProducts();"
+            @click.prevent="updateFilter('');"
           >
-            <!--  -->
             <div class="row justify-content-center">
               <div class="col-lg-5 col-md-6 col-4">
                 <img class="ml-auto productmenu-item-img-all" src style="max-width:70px;">
@@ -30,7 +31,6 @@
                 <div class="fs-12 productmenu-item-jp">ゼンブ</div>
               </div>
             </div>
-            <!--  -->
           </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
@@ -41,9 +41,8 @@
             role="tab"
             aria-controls="v-pills-profile"
             aria-selected="false"
-            @click.prevent="updateFilter('関東');getProducts();"
+            @click.prevent="updateFilter('関東');"
           >
-            <!--  -->
             <div class="row justify-content-center">
               <div class="col-lg-5 col-md-6 col-4" style>
                 <img class="ml-auto productmenu-item-img-kantou" style="max-width:70px;">
@@ -53,7 +52,6 @@
                 <div class="fs-12 productmenu-item-jp">カントウ</div>
               </div>
             </div>
-            <!--  -->
           </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
@@ -64,9 +62,8 @@
             role="tab"
             aria-controls="v-pills-messages"
             aria-selected="false"
-            @click.prevent="updateFilter('関西');getProducts();"
+            @click.prevent="updateFilter('関西');"
           >
-            <!--  -->
             <div class="row justify-content-center">
               <div class="col-lg-5 col-md-6 col-4" style>
                 <img class="ml-auto productmenu-item-img-kansai" style="max-width:70px;">
@@ -76,7 +73,6 @@
                 <div class="fs-12 productmenu-item-jp">カンサイ</div>
               </div>
             </div>
-            <!--  -->
           </a>
           <a
             class="nav-link nav-link-frontproducts col-md-12 col-sm-6 col-12 productmenu-item"
@@ -87,9 +83,8 @@
             role="tab"
             aria-controls="v-pills-settings"
             aria-selected="false"
-            @click.prevent="updateFilter('北海道');getProducts();"
+            @click.prevent="updateFilter('北海道');"
           >
-            <!--  -->
             <div class="row justify-content-center">
               <div class="col-lg-5 col-md-6 col-4" style>
                 <img class="ml-auto productmenu-item-img-hokkaidou" style="max-width:70px;">
@@ -99,9 +94,8 @@
                 <div class="fs-12 productmenu-item-jp">ホッカイドウ</div>
               </div>
             </div>
-            <!--  -->
           </a>
-        </div>
+        </div>-->
       </div>
       <div class="row col-md-9 col-lg-10 mx-md-auto" style="padding-bottom:100px;height:100%;">
         <div class="flyGift">
@@ -111,9 +105,9 @@
           <!--  -->
           <div>
             <ol class="breadcrumb" style="background-color:#fff;">
-              <li class="breadcrumb-item">
+              <!-- <li class="breadcrumb-item">
                 <a href="#/">首頁</a>
-              </li>
+              </li>-->
               <li class="breadcrumb-item">
                 <a
                   href="#/frontProducts"
@@ -125,10 +119,7 @@
           </div>
           <div class="row my-3">
             <div class="col-md-8">
-              <div
-                class="card text-center"
-                style="background: url('https://subtlepatterns.com/patterns/restaurant_icons.png');"
-              >
+              <div class="card text-center">
                 <div class="card-body">
                   <img :src="product.imageUrl" class="img-fluid" alt>
                   <h3
@@ -144,10 +135,7 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div
-                class="card text-center"
-                style="background: url('https://subtlepatterns.com/patterns/restaurant_icons.png');"
-              >
+              <div class="card text-center">
                 <div class="card-body">
                   <h6
                     class="modal-title text-left mb-2 pb-2"
@@ -185,11 +173,80 @@
         </div>
       </div>
     </div>
+    <!-- slides -->
+    <h3>你可能也有興趣</h3>
+    <swiper :options="swiperOption" ref="mySwiper">
+      <swiper-slide class="px-1" v-for="item in productsRevealed" :key="item.id">
+        <div class>
+          <!--<div
+          class="border-0"
+          style=" background-size: cover; background-position: center;box-shadow:0 1px 5px #000;"
+          :style="{backgroundImage:`url(${item.imageUrl})`}"
+          >-->
+          <div class="product-inner-wrap" style="position:relative;">
+            <div class="card h-100 w-100 product-inner hover">
+              <button type="button" class="btn h-100 w-100" @click.prevent="gettheProduct(item.id)">
+                <div class="card-title">
+                  <img class="img-fluid" :src="`${item.imageUrl}`" alt style="height:250px;">
+                </div>
+                <div class="card-body">
+                  <!-- <span
+                    class="badge badge-danger float-right ml-2 py-1 px-2"
+                    style="font-size:16px;"
+                  >{{item.category}}</span>-->
+                  <h5 class="text-left">
+                    <strong>
+                      <a
+                        href="#"
+                        class="text-info border border-info p-1 product-inner-title"
+                        @click.prevent="gotoTheProduct(item.id)"
+                      >{{item.title}}</a>
+                    </strong>
+                  </h5>
+                  <div class="frontproduct-text text-dark" style="height:50px;overflow-y:auto;">
+                    <p class="card-text">{{item.content}}</p>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-baseline">
+                    <div class="h5" v-if="!item.price">{{item.origin_price}} 元</div>
+                    <div class="h5 text-primary ml-auto" v-if="item.price">售價:{{item.price}}元</div>
+                  </div>
+                </div>
+              </button>
+              <div class="card-footer d-flex">
+                <button
+                  type="button"
+                  class="btn btn-outline-info btn-sm"
+                  @click="gotoTheProduct(item.id)"
+                >
+                  <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
+                  查看更多
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-warning btn-sm ml-auto"
+                  @click="addtoCart(item.id);"
+                >
+                  <i class="fas fa-spinner fa-spin" v-if="status.loadingItem===item.id"></i>
+                  加到購物車
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+      <!-- Optional controls
+      <div class="swiper-pagination" slot="pagination"></div>
+      <div class="swiper-button-prev" slot="button-prev"></div>
+      <div class="swiper-button-next" slot="button-next"></div>
+      <div class="swiper-scrollbar" slot="scrollbar"></div>-->
+    </swiper>
   </div>
 </template>
 
 <script>
 import $ from 'jquery';
+import 'swiper/dist/css/swiper.css';
+import { swiper, swiperSlide } from 'vue-awesome-swiper';
 
 export default {
   data() {
@@ -198,6 +255,26 @@ export default {
       theProductId: '',
       status: {
         loadingItem: '',
+      },
+      swiperOption: {
+        slidesPerView: 4,
+        spaceBetween: 0,
+        speed: 600,
+        autoplay: {
+          delay: 5000,
+        },
+        breakpoints:
+        {
+          992: {
+            slidesPerView: 3,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          576: {
+            slidesPerView: 1,
+          },
+        },
       },
     };
   },
@@ -244,6 +321,22 @@ export default {
       this.$store.dispatch('productsModules/updateProductFilter', filter);
       this.$router.push('/frontProducts');
     },
+    gotoTheProduct(id) {
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
+      vm.status.loadingItem = id;
+      this.$http.get(url).then((response) => {
+        vm.product = response.data.product;
+        $('html, body').animate({
+          scrollTop: 0,
+        }, 500);
+        vm.$router.push(`/frontProducts/${id}`);
+        // $('#productModal').modal('show');
+        // vm.product.num = 1;
+        // console.log(response.data);
+        vm.status.loadingItem = '';
+      });
+    },
   },
   computed: {
     isLoading() {
@@ -252,6 +345,13 @@ export default {
     productFilter() {
       return this.$store.state.productsModules.productFilter;
     },
+    productsRevealed() {
+      return this.$store.state.productsModules.productsRevealed;
+    },
+  },
+  components: {
+    swiper,
+    swiperSlide,
   },
   created() {
     const vm = this;
