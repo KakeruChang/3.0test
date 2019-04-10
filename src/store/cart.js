@@ -24,9 +24,11 @@ export default {
                     const result = {};
                     Object.assign(result, snapshot.val());
                     result.final_total = Math.floor(result.final_total);
-                    result.carts.forEach((item) => {
-                        item.final_total = Math.floor(item.final_total);
-                    });
+                    if (result.carts) {
+                        result.carts.forEach((item) => {
+                            item.final_total = Math.floor(item.final_total);
+                        });
+                    }
                     // context.commit('FIREBASE', result);
                     context.commit('CARTS', result);
                 });

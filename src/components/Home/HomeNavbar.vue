@@ -29,13 +29,19 @@
             class="nav-item nav-item-homenav px-3 pt-3 pb-2"
             :class="{ 'home-navbar-item-active': isActiveofHomeNavebar==='product' }"
           >
-            <router-link class="h5 home-navbar-item" to="/frontProducts">本店商品</router-link>
+            <router-link class="h5 home-navbar-item" to="/frontProducts">
+              <i class="fas fa-plane-departure"></i>
+              本店商品
+            </router-link>
           </li>
           <li
             class="nav-item nav-item-homenav px-3 pt-3 pb-2"
             :class="{ 'home-navbar-item-active': isActiveofHomeNavebar==='about' }"
           >
-            <router-link class="h5 home-navbar-item" to="/about">關於我們</router-link>
+            <router-link class="h5 home-navbar-item" to="/about">
+              <i class="fas fa-torah"></i>
+              關於我們
+            </router-link>
           </li>
           <li class="search-sm px-3">
             <Search/>

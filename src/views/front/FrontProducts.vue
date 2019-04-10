@@ -155,19 +155,19 @@
                   >
                     <div class="card-body">
                       <span
-                        class="badge badge-danger float-right ml-2 py-1 px-2"
+                        class="badge badge-danger product-category float-right ml-2 py-1 px-2"
                         style="font-size:16px;"
                       >{{item.category}}</span>
                       <h5 class="text-left">
                         <strong>
                           <a
                             href="#"
-                            class="text-info border border-info p-1 product-inner-title"
+                            class="border p-1 product-inner-title"
                             @click.prevent="gotoTheProduct(item.id)"
                           >{{item.title}}</a>
                         </strong>
                       </h5>
-                      <div class="frontproduct-text text-dark">
+                      <div class="frontproduct-text">
                         <p class="card-text">{{item.content}}</p>
                       </div>
                       <div class="d-flex justify-content-between align-items-baseline">
@@ -258,7 +258,7 @@
     </div>
 
     <!--購物車-->
-    <div
+    <!-- <div
       class="dropup"
       v-if="carts.carts"
       style="position:fixed;left:15px;bottom:80px;z-index:9999;"
@@ -323,10 +323,10 @@
           >
             <i class="fa fa-shopping-cart" aria-hidden="true"></i> 結帳去
           </router-link>
-          <!--  -->
         </div>
       </div>
-    </div>
+    </div>-->
+    <!-- 購物車 -->
     <!-- modal -->
     <div
       class="modal fade"
@@ -582,7 +582,7 @@ a:hover {
   }
   .product-inner.hover {
     opacity: 1;
-    background-color: rgba(150, 150, 150, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     transform: translateY(0);
     h5 {
       transform: translateX(0);

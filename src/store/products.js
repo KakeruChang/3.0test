@@ -8,6 +8,7 @@ export default {
         productsAll: [],
         productsFilted: [],
         productsRevealed: [],
+        productsrecommended: [],
         productFilter: '',
         searchFilter: '',
         page: 0,
@@ -81,6 +82,16 @@ export default {
                         numofPerpage * vm.state.productsModules.pagination.current_page));
             });
         },
+        getRecommendedProducts(context, { theCategory, theId }) {
+            context.dispatch('getProducts');
+            console.log('{ category, id }:', theCategory, theId);
+            context.commit('PRODUCTSRECOMMENDED', this.state.productsModules.productsAll.slice().filter((item) => {
+                if (item.category === theCategory && item.id !== theId) {
+                    return true;
+                }
+                return false;
+            }));
+        },
     },
     mutations: {
         PAGE(state, status) {
@@ -113,5 +124,9 @@ export default {
         PRODUCTSREVEALED(state, payload) {
             state.productsRevealed = payload;
         },
+        PRODUCTSRECOMMENDED(state, payload) {
+            state.productsrecommended = payload;
+        },
+
     },
 };

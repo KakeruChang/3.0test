@@ -4,8 +4,8 @@
       <img src="./../../assets/gif/no.gif" alt>
     </loading>
     <div class="row pt-5 pb-4">
-      <div class="col-md-3 col-lg-2 pb-3">
-        <!-- <div
+      <!-- <div class="col-md-3 col-lg-2 pb-3"> -->
+      <!-- <div
           class="nav nav-pills nav-pills-frontproducts row sticky-top"
           id="v-pills-tab"
           role="tablist"
@@ -95,9 +95,9 @@
               </div>
             </div>
           </a>
-        </div>-->
-      </div>
-      <div class="row col-md-9 col-lg-10 mx-md-auto" style="padding-bottom:100px;height:100%;">
+      </div>-->
+      <!-- </div> -->
+      <div class="row col-md-12 col-lg-12 mx-md-auto" style="padding-bottom:100px;height:100%;">
         <div class="flyGift">
           <i class="fas fa-gift fa-2x"></i>
         </div>
@@ -118,15 +118,21 @@
             </ol>
           </div>
           <div class="row my-3">
-            <div class="col-md-8">
+            <div class="col-md-5">
               <div class="card text-center">
                 <div class="card-body">
                   <img :src="product.imageUrl" class="img-fluid" alt>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body">
                   <h3
                     class="modal-title text-left mb-2 pb-2"
                     style="border-bottom:2px solid rgb(120,120,120);"
                   >紹介</h3>
-                  <p class="card-title h5">{{product.content}}</p>
+                  <p class>{{product.content}}</p>
                   <p
                     class="text-right"
                     style="font-size:70%;color:rgb(120,120,120);"
@@ -137,10 +143,19 @@
             <div class="col-md-4">
               <div class="card text-center">
                 <div class="card-body">
-                  <h6
-                    class="modal-title text-left mb-2 pb-2"
+                  <h5
+                    class="badge badge-danger float-right"
+                    style="font-size:16px;"
+                  >{{product.category}}</h5>
+                  <h1
+                    class="h2 font-bolder text-left mb-2 pb-2"
                     style="border-bottom:2px solid rgb(120,120,120);"
-                  >{{product.title}}</h6>
+                  >{{product.title}}</h1>
+                  <div class="row justify-content-between">
+                    <div class="h5 col-4 text-left">單位:</div>
+                    <div class="h5 col-4 text-right">1/{{product.unit}}</div>
+                  </div>
+                  <br>
                   <div class="d-flex justify-content-between align-items-baseline">
                     <div class="h5" v-if="!product.price">{{product.origin_price}} 元</div>
                     <del class="h6" v-if="product.price">原價{{product.origin_price}}元</del>
@@ -176,24 +191,24 @@
     <!-- slides -->
     <h3>你可能也有興趣</h3>
     <swiper :options="swiperOption" ref="mySwiper">
-      <swiper-slide class="px-1" v-for="item in productsRevealed" :key="item.id">
+      <swiper-slide class="px-1" v-for="item in productsRecommended" :key="item.id">
         <div class>
           <!--<div
           class="border-0"
           style=" background-size: cover; background-position: center;box-shadow:0 1px 5px #000;"
           :style="{backgroundImage:`url(${item.imageUrl})`}"
           >-->
-          <div class="product-inner-wrap" style="position:relative;">
+          <div class="product-inner-wrap">
             <div class="card h-100 w-100 product-inner hover">
               <button type="button" class="btn h-100 w-100" @click.prevent="gettheProduct(item.id)">
-                <div class="card-title">
-                  <img class="img-fluid" :src="`${item.imageUrl}`" alt style="height:250px;">
+                <div class="card-title" style="position:relative;">
+                  <img class="img-fluid" :src="`${item.imageUrl}`" style="height:250px;" alt>
+                  <span
+                    class="badge badge-danger"
+                    style="font-size:16px;position:absolute;top:0;right:0;"
+                  >{{item.category}}</span>
                 </div>
                 <div class="card-body">
-                  <!-- <span
-                    class="badge badge-danger float-right ml-2 py-1 px-2"
-                    style="font-size:16px;"
-                  >{{item.category}}</span>-->
                   <h5 class="text-left">
                     <strong>
                       <a
@@ -285,6 +300,8 @@ export default {
       this.$http.get(url).then((response) => {
         vm.product = response.data.product;
         vm.product.num = 1;
+        vm.getRecommended();
+        vm.gotoTop();
       });
     },
     moveGift() {
@@ -304,6 +321,11 @@ export default {
       $('.flyGift').css({
         'z-index': '-1', left: '-3%', top: '-3%', display: 'none',
       });
+    },
+    gotoTop() {
+      $('html, body').animate({
+        scrollTop: 0,
+      }, 500);
     },
     addtoCart(id, qty = 1) {
       const vm = this;
@@ -327,15 +349,18 @@ export default {
       vm.status.loadingItem = id;
       this.$http.get(url).then((response) => {
         vm.product = response.data.product;
-        $('html, body').animate({
-          scrollTop: 0,
-        }, 500);
+        vm.gotoTop();
         vm.$router.push(`/frontProducts/${id}`);
         // $('#productModal').modal('show');
         // vm.product.num = 1;
         // console.log(response.data);
         vm.status.loadingItem = '';
       });
+    },
+    getRecommended() {
+      const theCategory = this.product.category;
+      const theId = this.product.id;
+      this.$store.dispatch('productsModules/getRecommendedProducts', { theCategory, theId });
     },
   },
   computed: {
@@ -347,6 +372,9 @@ export default {
     },
     productsRevealed() {
       return this.$store.state.productsModules.productsRevealed;
+    },
+    productsRecommended() {
+      return this.$store.state.productsModules.productsrecommended;
     },
   },
   components: {
